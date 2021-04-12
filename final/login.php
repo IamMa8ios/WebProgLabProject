@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Bytes 4 Hire</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form method="POST" action="Connect.php">
+                <form method="POST" action="authenticate.php">
                     <h1>Login Form</h1>
 
                     <input type="text" name="username" class="form-control" placeholder="Username" required="required" />
@@ -53,8 +53,8 @@
                         <br />
 
                         <div>
-                            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                            <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                            <h1><i class="fa fa-paw"></i>Bytes 4 Hire</h1>
+                            <p>©2021 No Rights Reserved. Bytes 4 Hire is a uni project. Privacy and Terms</p>
                         </div>
                     </div>
                 </form>
@@ -63,17 +63,16 @@
 
         <div id="register" class="animate form registration_form">
             <section class="login_content">
-                <form method="POST" action="Connect.php">
+                <form method="POST" action="authenticate.php">
                     <h1>Create Account</h1>
 
-                        <input type="text" name="username" class="form-control" placeholder="Username" required="required" />
+                    <input type="text" name="username" class="form-control" placeholder="Username" required="required" />
 
-                        <input type="email" name="email" class="form-control" placeholder="Email" required="required" />
+                    <input type="email" name="email" class="form-control" placeholder="Email" required="required" />
 
-                        <input type="password" name="password" class="form-control" placeholder="Password" required="required" />
+                    <input type="password" name="password" class="form-control" placeholder="Password" required="required" />
 
-                        <input type="submit" name="action" class="btn btn-default submit" value="Register">
-
+                    <input type="submit" name="action" class="btn btn-default submit" value="Register">
 
                     <div class="clearfix"></div>
 
@@ -86,9 +85,10 @@
                         <br />
 
                         <div>
-                            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                            <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                            <h1><i class="fa fa-paw"></i>Bytes 4 Hire</h1>
+                            <p>©2021 No Rights Reserved. Bytes 4 Hire is a uni project. Privacy and Terms</p>
                         </div>
+                        
                     </div>
                 </form>
             </section>

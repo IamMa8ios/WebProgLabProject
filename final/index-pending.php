@@ -1,13 +1,13 @@
 <?php
 	session_start();
 	if (!isset($_SESSION['username'])) {
-		header("Location: Login.php");
+		header("Location: login.php");
 	}else{
 		if(!isset($_SESSION['active'])){
-			header("Location: Login.php");
+			header("Location: login.php");
 		}
 		if ($_SESSION['active']!='yes'){
-			header("Location: Login.php");
+			header("Location: login.php");
 		}
 	}
 ?>
@@ -54,7 +54,7 @@
                                     <span>Settings</span>
                                 </a>
                                 <a class="dropdown-item" href="javascript:;">Help</a>
-                                <a class="dropdown-item" href="CloseSession.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                <a class="dropdown-item" href="session-close.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                             </div>
                         </li>
 

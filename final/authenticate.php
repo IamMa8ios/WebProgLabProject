@@ -51,12 +51,12 @@
 								$_SESSION['active'] = 'yes';
 								$stmt->close();
 								$con->close();
-								header("Location: UserIndex.php");
+								header("Location: index-freelancer.php");
 							} else {
 								$_SESSION['active'] = 'no';
 								$stmt->close();
 								$con->close();
-								header("Location: ConfirmationPending.php");
+								header("Location: index-pending.php");
 							}
 							
 						} else {
@@ -115,7 +115,7 @@
 							session_start();
 							$_SESSION["username"] = $Username;
 							
-							header("Location: UserIndex.php");
+							header("Location: index-freelancer.php");
 						} else {
 							// remove all session variables
 							session_unset();

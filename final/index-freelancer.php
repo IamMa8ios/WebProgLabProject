@@ -1,15 +1,15 @@
 <?php
-	session_start();
+    session_start();
 	if (!isset($_SESSION['username'])) {
-		header("Location: Login.php");
+		header("Location: login.php");
 	}else{
 		if(!isset($_SESSION['active'])){
-			header("Location: Login.php");
+			header("Location: login.php");
 		}
 		if ($_SESSION['active']!='yes'){
-			header("Location: Login.php");
+			header("Location: login.php");
 		}
-	}
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
 
     <title>Bytes 4 Hire</title>
 
@@ -28,9 +28,6 @@
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -39,12 +36,10 @@
 
 <div class="container body">
     <div class="main_container">
-
-        <!-- sidebar -->
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="UserIndex.php" class="site_title"><i class="fa fa-dollar"></i> <span>Bytes 4 Hire</span></a>
+                    <a href="index-freelancer.php" class="site_title"><i class="fa fa-dollar"></i> <span>Bytes 4 Hire</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -56,12 +51,12 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-						<?php echo "<h2>".$_SESSION['username']."</h2>";?>
+                        <h2><?php echo $_SESSION['username']; ?></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -69,14 +64,15 @@
                         <h3>General</h3>
                         <ul class="nav side-menu">
                             <!-- Home -->
-                            <li><a href="UserIndex.php"><i class="fa fa-home"></i> Home </a></li>
+                            <li><a href="index-freelancer.php"><i class="fa fa-home"></i> Home </a></li>
 
                             <!-- Manage Listings -->
                             <li><a><i class="fa fa-edit"></i> Listings <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="NewListing.php">New Listing</a></li>
-                                    <li><a href="BusinessListings.php">Business Listings</a></li>
-                                    <li><a href="FreelancerListings.php">Manage My Listings</a></li>
+                                    <li><a href="listings-new.php">New Listing</a></li>
+                                    <li><a href="listings-business.php">Business Listings</a></li>
+                                    <li><a href="listings-personal.php">Manage My Listings</a></li>
+                                    <li><a href="listings-personal.php">Manage My Listings</a></li>
                                 </ul>
                             </li>
 
@@ -111,14 +107,13 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="Login.php">
+                    <a class="dropdown-item" href="session-close.php"><i class="fa fa-sign-out pull-right"></i> Log Out
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
                 <!-- /menu footer buttons -->
             </div>
         </div>
-        <!-- /sidebar -->
 
         <!-- top navigation -->
         <div class="top_nav">
@@ -129,22 +124,25 @@
                 <nav class="nav navbar-nav">
                     <ul class=" navbar-right">
                         <li class="nav-item dropdown open" style="padding-left: 15px;">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+                               id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                                 <img src="Images/user.png" alt=""><?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                                <a class="dropdown-item"  href="javascript:;">
+                                <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                <a class="dropdown-item" href="javascript:;">
                                     <span>Settings</span>
                                 </a>
-                                <a class="dropdown-item"  href="javascript:;">Help</a>
-                                <a class="dropdown-item"  href="CloseSession.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                <a class="dropdown-item" href="javascript:;">Help</a>
+                                <a class="dropdown-item" href="login.php"><i class="fa fa-sign-out pull-right"></i> Log
+                                    Out</a>
                             </div>
                         </li>
 
                         <!-- Notifications - To be replaced with php -->
                         <li role="presentation" class="nav-item dropdown open">
-                            <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+                               data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">1</span>
                             </a>
@@ -152,7 +150,7 @@
                                 
                                 <li class="nav-item">
                                     <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="Images/user.png" alt="Profile Image"/></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -171,9 +169,9 @@
                                         </a>
                                     </div>
                                 </li>
+                                
                             </ul>
                         </li>
-
 
                     </ul>
                 </nav>
@@ -184,84 +182,48 @@
         <!-- page content -->
         <div class="right_col" role="main">
 
-            <div class="row">
-                <div class="col-md-6 ">
-                    <div class="x_panel">
+            <!-- Profile Widget -->
+            <div class="col-md-3   widget widget_tally_box">
+                <div class="x_panel fixed_height_390">
+                    <div class="x_content">
 
-                        <div class="x_content">
-                            <br />
-                            <form class="form-horizontal form-label-left">
-
-                                <span class="section">Listing Info</span>
-
-                                <div class="form-group row ">
-                                    <label class="control-label col-md-3 col-sm-3 ">Job Title<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input type="text" class="form-control" name="name" placeholder="e.g. Developer" required="required">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="control-label col-md-3 col-sm-3 ">Level</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <select class="form-control">
-                                            <option>Choose option</option>
-											<?php include("ExpLevelOptions.php"); ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row ">
-                                    <label class="control-label col-md-3 col-sm-3 ">Payment Amount<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input type="text" class="form-control" name="name" placeholder="" required="required">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="control-label col-md-3 col-sm-3 ">Rate<span class="required">*</span></label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <select class="form-control">
-                                            <option>Choose option</option>
-											<?php include("RateOptions.php"); ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="control-label col-md-3 col-sm-3 ">Techs</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input id="tags_1" type="text" class="tags form-control" value="" />
-                                        <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="control-label col-md-3 col-sm-3 ">Location</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input type="text" name="country" id="autocomplete-custom-append" class="form-control col-md-10" required="required">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="control-label col-md-3 col-sm-3 ">Description</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input type="text" class="tags form-control" />
-                                        <div style="position: relative; float: left; width: 250px; margin: 10px;"></div>
-                                    </div>
-                                </div>
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-9 col-sm-9  offset-md-3">
-                                        <button type="reset" class="btn btn-primary">Reset</button>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-
-                            </form>
+                        <div class="flex">
+                            <ul class="list-inline widget_profile_box">
+                                <li>
+                                    <a>
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <img src="Images/user.png" alt="..." class="img-circle profile_img">
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
 
+                        <!-- Get data from DB -->
+                        <h3 class="name"><?php echo $_SESSION['username']; ?></h3>
+
+                        <div class="flex">
+                            <ul class="list-inline count2">
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Listed</span>
+                                </li>
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Applied</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <p>
+                            If you've decided to go in development mode and tweak all of this a bit, there are few
+                            things you should do.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -277,7 +239,6 @@
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
-
     </div>
 </div>
 
@@ -285,16 +246,6 @@
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery Tags Input -->
-<script src="../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-<!-- Switchery -->
-<script src="../vendors/switchery/dist/switchery.min.js"></script>
-<!-- jQuery autocomplete -->
-<script src="../vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-<!-- validator -->
-<script src="../vendors/validator/validator.js"></script>
-
-
 
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>

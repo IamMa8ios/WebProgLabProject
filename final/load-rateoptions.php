@@ -7,7 +7,7 @@
 	if ($con) {
 		
 		
-		$stmt = $con->prepare("SELECT exp_level From `exp_levels`");
+		$stmt = $con->prepare("SELECT rate From `payment_rates` ORDER BY id ASC");
 		
 		$stmt->execute();
 		
@@ -15,23 +15,23 @@
 		
 		if ($result) {//check if any data exists
 			
-			$stmt->bind_result($expLevel);
+			$stmt->bind_result($rate);
 			
-			/* fetch values */
+			//fetch values
 			while ($stmt->fetch()) {
-				echo"<option>".$expLevel."</option>";
+				echo"<option>".$rate."</option>";
 			}
-		
+			
 		} else {
 			echo "ERROR WHILE COMMUNICATING WITH HOST";
 		}
 		
 		$stmt->close();
-		$con->close();
 		
 	} else {
 		echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
 	}
-
+	
+	$con->close();
 
 ?>

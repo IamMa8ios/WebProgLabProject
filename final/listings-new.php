@@ -28,16 +28,19 @@
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
 
 <div class="container body">
     <div class="main_container">
+
+        <!-- sidebar -->
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
@@ -53,7 +56,7 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2><?php echo $_SESSION['username']; ?></h2>
+						<?php echo "<h2>".$_SESSION['username']."</h2>";?>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -71,7 +74,7 @@
                             <!-- Manage Listings -->
                             <li><a><i class="fa fa-edit"></i> Listings <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="NewListing.php">New Listing</a></li>
+                                    <li><a href="listings-new.php">New Listing</a></li>
                                     <li><a href="BusinessListings.php">Business Listings</a></li>
                                     <li><a href="FreelancerListings.php">Manage My Listings</a></li>
                                 </ul>
@@ -115,6 +118,7 @@
                 <!-- /menu footer buttons -->
             </div>
         </div>
+        <!-- /sidebar -->
 
         <!-- top navigation -->
         <div class="top_nav">
@@ -140,12 +144,10 @@
 
                         <!-- Notifications - To be replaced with php -->
                         <li role="presentation" class="nav-item dropdown open">
-                            
                             <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">1</span>
                             </a>
-                            
                             <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                                 
                                 <li class="nav-item">
@@ -169,10 +171,8 @@
                                         </a>
                                     </div>
                                 </li>
-                                
                             </ul>
                         </li>
-                        <!-- /Notifications -->
 
 
                     </ul>
@@ -184,71 +184,86 @@
         <!-- page content -->
         <div class="right_col" role="main">
 
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="x_panel">
 
-            <div class="col-md-6">
-                <h3>My Listings</h3>
-            </div>
+                        <div class="x_content">
+                            <br />
+                            <form class="form-horizontal form-label-left" method="POST" action="Connect.php">
 
-            <!-- Listings Table -->
-            <div class="x_content">
-                <div class="table-responsive">
-                    <table class="table table-striped jambo_table bulk_action">
+                                <span class="section">Listing Info</span>
 
-                        <thead>
-                        <tr class="headings">
-                            <th>
-                                <input type="checkbox" id="check-all" class="flat">
-                            </th>
-                            <th class="column-title">Job Title</th>
-                            <th class="column-title">Level</th>
-                            <th class="column-title">Techs</th>
-                            <th class="column-title">Payment</th>
-                            <th class="column-title">Location</th>
-                            <th class="column-title">Date Listed</th>
-                            <th class="column-title">Status</th>
-                            <th class="column-title no-link last"><span class="nobr">Action</span>
-                            </th>
-                            <th class="bulk-actions" colspan="8">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Select All ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
-                        </tr>
-                        </thead>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Job Title<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="name" placeholder="e.g. Developer" required="required">
+                                    </div>
+                                </div>
 
-                        <tbody>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Level</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <select class="form-control">
+                                            <option>Choose option</option>
+											<?php include("ExpLevelOptions.php"); ?>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">Developer</td>
-                            <td class=" ">Senior</td>
-                            <td class=" ">PHP</td>
-                            <td class="a-right a-right ">$7.45/h</td>
-                            <td class=" ">Greece</td>
-                            <td class=" ">May 23, 2014 11:47:56 PM </td>
-                            <td class=" ">Active</td>
-                            <td class=" last"><a href="#">View   </a><a href="#">   Edit</a></td>
-                        </tr>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Payment Amount<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="name" placeholder="" required="required">
+                                    </div>
+                                </div>
 
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">Junior</td>
-                            <td class=" ">Developer</td>
-                            <td class=" ">C++</td>
-                            <td class="a-right a-right ">$741.20/m</td>
-                            <td class=" ">Remote</td>
-                            <td class=" ">May 23, 2014 11:30:12 PM</td>
-                            <td class=" ">Closed</td>
-                            <td class=" last"><a href="#">View   </a><a href="#">   Edit</a></td>
-                        </tr>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Rate<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <select class="form-control">
+                                            <option>Choose option</option>
+											<?php include("RateOptions.php"); ?>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        </tbody>
-                    </table>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Techs</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input id="tags_1" type="text" class="tags form-control" value="" />
+                                        <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Location</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="country" id="autocomplete-custom-append" class="form-control col-md-10" required="required">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Description</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="tags form-control" />
+                                        <div style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-9 col-sm-9  offset-md-3">
+                                        <button type="reset" class="btn btn-primary">Reset</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
-
-
             </div>
 
         </div>
@@ -262,6 +277,7 @@
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
+
     </div>
 </div>
 
@@ -269,8 +285,16 @@
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- jQuery Tags Input -->
+<script src="../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+<!-- Switchery -->
+<script src="../vendors/switchery/dist/switchery.min.js"></script>
+<!-- jQuery autocomplete -->
+<script src="../vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+<!-- validator -->
+<script src="../vendors/validator/validator.js"></script>
+
+
 
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
