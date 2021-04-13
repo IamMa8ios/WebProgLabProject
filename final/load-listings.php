@@ -2,7 +2,7 @@
 	
 	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['active'])) {
 		
-		if ($_SESSION['role'] == 'freelancer' && $_SESSION['active'] == 'yes') {
+		if ($_SESSION['role'] == 'Freelancer' && $_SESSION['active'] == 'yes') {
 			
 			$con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
 			
