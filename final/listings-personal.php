@@ -78,11 +78,7 @@
                             </li>
 
                             <!-- Statistics -->
-                            <li><a><i class="fa fa-bar-chart-o"></i> Statistics </a>
-                                <ul class="nav child_menu">
-                                    <a href="chartjs.html"></a>
-                                </ul>
-                            </li>
+                            <li><a><i class="fa fa-bar-chart-o"></i> Statistics </a></li>
 
                             <!-- Manage Tables -->
                             <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
@@ -97,22 +93,6 @@
                 </div>
                 <!-- /sidebar menu -->
 
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="Login.php">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
             </div>
         </div>
 
@@ -150,7 +130,7 @@
                                 
                                 <li class="nav-item">
                                     <a class="dropdown-item">
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="Images/user.png" alt="Profile Image" /></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -204,7 +184,7 @@
                             <th class="column-title">Techs</th>
                             <th class="column-title">Payment</th>
                             <th class="column-title">Location</th>
-                            <th class="column-title">Date Listed</th>
+                            <th class="column-title">Date Submitted</th>
                             <th class="column-title">Status</th>
                             <th class="column-title no-link last"><span class="nobr">Action</span>
                             </th>
@@ -215,35 +195,7 @@
                         </thead>
 
                         <tbody>
-
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">Developer</td>
-                            <td class=" ">Senior</td>
-                            <td class=" ">PHP</td>
-                            <td class="a-right a-right ">$7.45/h</td>
-                            <td class=" ">Greece</td>
-                            <td class=" ">May 23, 2014 11:47:56 PM </td>
-                            <td class=" ">Active</td>
-                            <td class=" last"><a href="#">View   </a><a href="#">   Edit</a></td>
-                        </tr>
-
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">Junior</td>
-                            <td class=" ">Developer</td>
-                            <td class=" ">C++</td>
-                            <td class="a-right a-right ">$741.20/m</td>
-                            <td class=" ">Remote</td>
-                            <td class=" ">May 23, 2014 11:30:12 PM</td>
-                            <td class=" ">Closed</td>
-                            <td class=" last"><a href="#">View   </a><a href="#">   Edit</a></td>
-                        </tr>
-
+                            <?php include("listings-load.php"); ?>
                         </tbody>
                     </table>
                 </div>

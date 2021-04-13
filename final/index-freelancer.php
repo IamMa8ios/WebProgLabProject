@@ -20,7 +20,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico"/>
+    <link rel="icon" href="../production/images/favicon.ico" type="image/ico"/>
 
     <title>Bytes 4 Hire</title>
 
@@ -38,6 +38,7 @@
     <div class="main_container">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
+                
                 <div class="navbar nav_title" style="border: 0;">
                     <a href="index-freelancer.php" class="site_title"><i class="fa fa-dollar"></i> <span>Bytes 4 Hire</span></a>
                 </div>
@@ -72,16 +73,11 @@
                                     <li><a href="listings-new.php">New Listing</a></li>
                                     <li><a href="listings-business.php">Business Listings</a></li>
                                     <li><a href="listings-personal.php">Manage My Listings</a></li>
-                                    <li><a href="listings-personal.php">Manage My Listings</a></li>
                                 </ul>
                             </li>
 
                             <!-- Statistics -->
-                            <li><a><i class="fa fa-bar-chart-o"></i> Statistics </a>
-                                <ul class="nav child_menu">
-                                    <a href="chartjs.html"></a>
-                                </ul>
-                            </li>
+                            <li><a><i class="fa fa-bar-chart-o"></i> Statistics </a></li>
 
                             <!-- Manage Tables -->
                             <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
@@ -95,23 +91,7 @@
 
                 </div>
                 <!-- /sidebar menu -->
-
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a class="dropdown-item" href="session-close.php"><i class="fa fa-sign-out pull-right"></i> Log Out
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
+                
             </div>
         </div>
 
@@ -134,8 +114,7 @@
                                     <span>Settings</span>
                                 </a>
                                 <a class="dropdown-item" href="javascript:;">Help</a>
-                                <a class="dropdown-item" href="login.php"><i class="fa fa-sign-out pull-right"></i> Log
-                                    Out</a>
+                                <a class="dropdown-item" href="session-close.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                             </div>
                         </li>
 
@@ -146,12 +125,14 @@
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">1</span>
                             </a>
-                            <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                                
+                            <ul class="dropdown-menu list-unstyled msg_list" role="menu"
+                                aria-labelledby="navbarDropdown1">
+
                                 <li class="nav-item">
                                     <a class="dropdown-item">
                                         <span class="image"><img src="Images/user.png" alt="Profile Image"/></span>
                                         <span>
+                                            <!-- Username from notification -->
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
                                         </span>
@@ -169,9 +150,10 @@
                                         </a>
                                     </div>
                                 </li>
-                                
+
                             </ul>
                         </li>
+                        <!-- /Notifications -->
 
                     </ul>
                 </nav>

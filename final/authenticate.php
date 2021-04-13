@@ -43,6 +43,7 @@
 							
 							session_start();
 							$_SESSION["username"] = $Username;
+							$_SESSION['user_type']='freelancer';
 							
 							$stmt->bind_result($status);
 							$stmt->fetch();
@@ -113,25 +114,16 @@
 							$con->close();
 							
 							session_start();
-							$_SESSION["username"] = $Username;
+							$_SESSION['username'] = $Username;
+							$_SESSION['user_type']='freelancer';
 							
 							header("Location: index-freelancer.php");
 						} else {
-							// remove all session variables
-							session_unset();
-							
-							// destroy the session
-							session_destroy();
-							echo "EMAIL ALREADY IN USE";
+							header("Location: session-close.php");
 						}
 						
 					} else {
-						// remove all session variables
-						session_unset();
-						
-						// destroy the session
-						session_destroy();
-						echo "USERNAME TAKEN";
+						header("Location: session-close.php");
 					}
 					
 				}

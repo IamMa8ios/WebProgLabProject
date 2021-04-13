@@ -6,7 +6,7 @@
 		if(!isset($_SESSION['active'])){
 			header("Location: login.php");
 		}
-		if ($_SESSION['active']!='yes'){
+		if ($_SESSION['active']!='no'){
 			header("Location: login.php");
 		}
 	}
@@ -131,8 +131,8 @@
                         <h3 class="name"><?php echo $_SESSION['username']; ?></h3>
 
                         <div class="flex">
-                            <ul class="list-inline count2">
-                                <h3>Pending Confirmation</h3>
+                            <ul class="list-inline count2" style="font-size: large">
+                                <b>Pending Confirmation</b>
                             </ul>
                         </div>
                         <p>
