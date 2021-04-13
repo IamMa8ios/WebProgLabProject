@@ -200,6 +200,10 @@
                                     <h3>123</h3>
                                     <span>Applied</span>
                                 </li>
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Applied</span>
+                                </li>
                             </ul>
                         </div>
                         <p>

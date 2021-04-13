@@ -18,7 +18,7 @@
 			$stmt->free_result();
 			
 			$stmt = $con->prepare("SELECT `job_title`, `job_level`, `techs`, `payment_amount`, `payment_rate`,
-       								`location`, `date_submitted`, `status` FROM `freelancer_listings` WHERE `freelancerID`=?");
+       						`location`, `date_submitted`, `status` FROM `freelancer_listings` WHERE `freelancerID`=?");
 			$stmt->bind_param("i", $userID);
 			//listingID 	freelancerID 	job_title 	job_level 	payment_amount 	payment_rate 	techs 	location 	description 	date_submitted
 			$stmt->execute();
@@ -34,7 +34,7 @@
 						echo "<td>" . $location . "</td>";
 						echo "<td>" . $date . "</td>";
 						echo "<td>" . $status . "</td>";
-						echo "<td class=' last'><a href='#'>View   </a><a href='#'>   Edit</a></td>";
+						echo "<td class=' last'><a href='#'>View</a>";
 					echo "</tr>";
 					
 				}
@@ -49,4 +49,3 @@
 	}
 
 ?>
-
