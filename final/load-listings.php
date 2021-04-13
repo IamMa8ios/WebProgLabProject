@@ -1,13 +1,12 @@
 <?php
 	
-	
-	if (isset($_SESSION) && isset($_SESSION['user_type']) && isset($_SESSION['active'])) {
+	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['active'])) {
 		
-		if ($_SESSION['user_type'] == 'freelancer' && $_SESSION['active'] == 'yes') {
+		if ($_SESSION['role'] == 'freelancer' && $_SESSION['active'] == 'yes') {
 			
 			$con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
 			
-			$stmt = $con->prepare("SELECT `id` FROM `freelancers` WHERE `username`=?");
+			$stmt = $con->prepare("SELECT `id` FROM `users` WHERE `username`=?");
 			$stmt->bind_param("s", $_SESSION['username']);
 			$stmt->execute();
 			$stmt->bind_result($id_result);

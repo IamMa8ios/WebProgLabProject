@@ -24,7 +24,7 @@
 					if ($con){
 						
 						session_start();
-						$stmt = $con->prepare("SELECT id FROM freelancers WHERE username=?");
+						$stmt = $con->prepare("SELECT id FROM users WHERE username=?");
 						$stmt->bind_param("s", $_SESSION['username']);
 						//echo "username ".$_SESSION['username']."<br>";
 						$stmt->execute();

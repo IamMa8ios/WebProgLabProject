@@ -1,3 +1,7 @@
+<?php
+	include("session-access.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

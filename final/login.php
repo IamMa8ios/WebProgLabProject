@@ -37,10 +37,17 @@
 
                     <input type="password" name="password" class="form-control" placeholder="Password" required="required" />
 
+                    <select name="role" class="form-control" required="required">
+                        <option>Choose Role</option>
+                        <option>Admin</option>
+                        <option>Business</option>
+                        <option>Freelancer</option>
+                    </select>
 
                     <input type="submit" name="action" class="btn btn-default submit" value="Log In">
-                    <a class="reset_pass" href="#">Lost your password?</a>
-
+                    <span>
+                        <a class="reset_pass" href="#">Lost your password?</a>
+                    </span>
 
                     <div class="clearfix"></div>
 
@@ -88,7 +95,7 @@
                             <h1><i class="fa fa-paw"></i>Bytes 4 Hire</h1>
                             <p>©2021 No Rights Reserved. Bytes 4 Hire is a uni project. Privacy and Terms</p>
                         </div>
-                        
+
                     </div>
                 </form>
             </section>

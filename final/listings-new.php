@@ -1,15 +1,5 @@
 <?php
-	session_start();
-	if (!isset($_SESSION['username'])) {
-		header("Location: Login.php");
-	}else{
-		if(!isset($_SESSION['active'])){
-			header("Location: Login.php");
-		}
-		if ($_SESSION['active']!='yes'){
-			header("Location: Login.php");
-		}
-	}
+	include("session-access.php");
 ?>
 
 <!DOCTYPE html>
