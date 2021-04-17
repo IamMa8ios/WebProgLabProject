@@ -1,5 +1,8 @@
 <?php
-	include("session-access.php");
+    session_start();
+	if(!(isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['status']) && $_SESSION['status']=='Pending Confirmation')){
+	    header("Location: login.php");
+    }
 ?>
 
 <!DOCTYPE html>

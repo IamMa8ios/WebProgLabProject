@@ -54,36 +54,7 @@
                 <br />
 
                 <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <h3>General</h3>
-                        <ul class="nav side-menu">
-                            <!-- Home -->
-                            <li><a href="index-freelancer.php"><i class="fa fa-home"></i> Home </a></li>
-
-                            <!-- Manage Listings -->
-                            <li><a><i class="fa fa-edit"></i> Listings <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="listings-new.php">New Listing</a></li>
-                                    <li><a href="listings-business.php">Business Listings</a></li>
-                                    <li><a href="listings-personal.php">Manage My Listings</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- Statistics -->
-                            <li><a><i class="fa fa-bar-chart-o"></i> Statistics </a></li>
-
-                            <!-- Manage Tables -->
-                            <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="tables.html">Tables</a></li>
-                                    <li><a href="tables_dynamic.html">Table Dynamic</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
+				<?php include("sidebar.php"); ?>
                 <!-- /sidebar menu -->
                 
             </div>

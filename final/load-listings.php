@@ -1,5 +1,7 @@
 <?php
 	
+	//listingID freelancerID job_title job_level payment_amount payment_rate techs location description date_submitted status last_update
+	
 	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['active'])) {
 		
 		if ($_SESSION['role'] == 'Freelancer' && $_SESSION['active'] == 'yes') {
@@ -19,7 +21,6 @@
 			$stmt = $con->prepare("SELECT `job_title`, `job_level`, `techs`, `payment_amount`, `payment_rate`,
        						`location`, `date_submitted`, `status` FROM `freelancer_listings` WHERE `freelancerID`=?");
 			$stmt->bind_param("i", $userID);
-			//listingID 	freelancerID 	job_title 	job_level 	payment_amount 	payment_rate 	techs 	location 	description 	date_submitted
 			$stmt->execute();
 			
 			if ($stmt->bind_result($title, $level, $techs, $amount, $rate, $location, $date, $status)) {
@@ -33,7 +34,7 @@
 						echo "<td>" . $location . "</td>";
 						echo "<td>" . $date . "</td>";
 						echo "<td>" . $status . "</td>";
-						echo "<td class=' last'><a href='#'>View</a>";
+						echo "<td class=' last'><i href='#'>View</i>";
 					echo "</tr>";
 					
 				}

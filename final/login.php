@@ -37,13 +37,6 @@
 
                     <input type="password" name="password" class="form-control" placeholder="Password" required="required" />
 
-                    <select name="role" class="form-control" required="required">
-                        <option>Choose Role</option>
-                        <option>Admin</option>
-                        <option>Business</option>
-                        <option>Freelancer</option>
-                    </select>
-
                     <input type="submit" name="action" class="btn btn-default submit" value="Log In">
                     <span>
                         <a class="reset_pass" href="#">Lost your password?</a>
@@ -78,6 +71,13 @@
                     <input type="email" name="email" class="form-control" placeholder="Email" required="required" />
 
                     <input type="password" name="password" class="form-control" placeholder="Password" required="required" />
+                    
+                    <select name="role" class="form-control" required="required">
+                        <option>Choose Role</option>
+                        <option>Admin</option>
+                        <option>Business</option>
+                        <option>Freelancer</option>
+                    </select>
 
                     <input type="submit" name="action" class="btn btn-default submit" value="Register">
 
