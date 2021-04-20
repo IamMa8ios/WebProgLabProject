@@ -54,7 +54,7 @@
                     <li><a><i class='fa fa-edit'></i> Listings <span class='fa fa-chevron-down'></span></a>
                         <ul class='nav child_menu'>
                             <li><a href='listings-new.php'>New Listing</a></li>
-                            <li><a href='listings-business.php'>Business Listings</a></li>
+                            <li><a href='listings-others.php'>Business Listings</a></li>
                             <li><a href='listings-personal.php'>Manage My Listings</a></li>
                         </ul>
                     </li>

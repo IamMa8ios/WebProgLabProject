@@ -14,28 +14,44 @@
 			$stmt->fetch();
 			
 			$userID = intval($id_result);
-			
 			$stmt->free_result();
 			
-			$stmt = $con->prepare("SELECT `job_title`, `job_level`, `techs`, `payment_amount`, `payment_rate`,
-       						`location`, `date_submitted`, `status` FROM `listings` WHERE `userID`=?");
+			$stmt = $con->prepare("SELECT `id` FROM `listings` WHERE `userID`=?");
 			$stmt->bind_param("i", $userID);
 			$stmt->execute();
 			
-			if ($stmt->bind_result($title, $level, $techs, $amount, $rate, $location, $date, $status)) {
-				while ($stmt->fetch()) {
-					echo "<tr class='odd pointer'>";
-						echo "<td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>";
-						echo "<td>" . $title . "</td>";
-						echo "<td>" . $level . "</td>";
-						echo "<td>" . $techs . "</td>";
-						echo "<td>$" . $amount . "/" . $rate . "</td>";
-						echo "<td>" . $location . "</td>";
-						echo "<td>" . $date . "</td>";
-						echo "<td>" . $status . "</td>";
-						echo "<td class=' last'><i href='#'>View</i>";
-					echo "</tr>";
-					
+			$stmt->bind_result($id_result);
+			
+			$id_results = array();
+			
+			while ($stmt->fetch()) {
+				array_push($id_results, $id_result);
+			}
+			
+			$stmt->free_result();
+			
+			$stmt = $con->prepare("SELECT `job_title`, `techs`, `payment_amount`, `location`, `date_submitted`,
+       									`status`, `exp_level`, `rate`
+										FROM `listings`, `exp_levels` AS el, `payment_rates` AS pr
+										WHERE `userID`=? AND `el`.`id`=`job_level` AND `pr`.`id`=`payment_rate`");
+			$stmt->bind_param("i", $userID);
+			$stmt->execute();
+			
+			if ($stmt->bind_result($title, $techs, $amount, $location, $date, $status, $level, $rate)) {
+				
+				while ($stmt->fetch()) { ?>
+                    <tr class='odd pointer'>
+                        <td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>
+                        <td> <?php echo $title ?> </td>
+                        <td> <?php echo $level ?> </td>
+                        <td> <?php echo $techs ?> </td>
+                        <td>$<?php echo $amount . "/" . $rate ?> </td>
+                        <td> <?php echo $location ?> </td>
+                        <td> <?php echo $date ?> </td>
+                        <td> <?php echo $status ?> </td>
+                        <td class=' last'><i href='#'>View</i>
+                    </tr>
+					<?php
 				}
 				
 			}

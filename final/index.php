@@ -1,8 +1,5 @@
 <?php
 	
-	//TODO: Listings reference from users instead of other tables
-	//TODO: header in separate file
-	
 	session_start();
 	
 	if (!isset($_SESSION['username'])) {

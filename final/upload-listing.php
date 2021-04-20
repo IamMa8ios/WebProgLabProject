@@ -25,6 +25,8 @@
 						
 						$con->autocommit(false);
 						
+						$id_results=array();
+						
 						session_start();
 						//find user id
 						$stmt = $con->prepare("SELECT `id` FROM `users` WHERE `username`=?");
@@ -33,32 +35,31 @@
 						$stmt->execute();
 						$stmt->bind_result($text);
 						$stmt->fetch();
-						$userID = intval($text);
+						array_push($id_results, $text);
 						$stmt->free_result();
 						
 						//get id for job level
 						$stmt = $con->prepare("SELECT `id` FROM `exp_levels` WHERE `exp_level`=?");
 						$stmt->bind_param("s", $_POST['exp_level']);
 						$stmt->execute();
-						$result=$stmt->get_result();
 						$stmt->bind_result($text);
 						$stmt->fetch();
-						$level = intval($text);
+						array_push($id_results, $text);
 						$stmt->free_result();
 						
+						//get id for payment rate
 						$stmt = $con->prepare("SELECT `id` FROM `payment_rates` WHERE `rate`=?");
 						$stmt->bind_param("s", $_POST['rate']);
 						$stmt->execute();
-						$result=$stmt->get_result();
 						$stmt->bind_result($text);
 						$stmt->fetch();
-						$rate = intval($text);
+						array_push($id_results, $text);
 						$stmt->free_result();
 						
 						$stmt = $con->prepare("INSERT INTO
     					listings (userID, job_title, job_level, payment_amount, payment_rate, techs, location, description)
 						VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-						$stmt->bind_param("isidisss", $userID, $jobTitle, $level, $amount, $rate, $techs, $location, $description);
+						$stmt->bind_param("isidisss", $id_results[0], $jobTitle, $id_results[1], $amount, $id_results[2], $techs, $location, $description);
 						
 						$stmt->execute();
 						
@@ -79,27 +80,6 @@
 		}
 		
 	}
-	
-	/*
-	if ($exp_level == 'Choose option') {
-		echo "<div class='alert alert-warning alert-dismissible ' role='alert'>
-								<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>
-								<strong>Choose an experience level!</strong>
-							</div>";
-	}
-	
-	$rate = $_POST['rate'];
-	if (isset($rate)) {
-		
-		if ($rate == 'Choose option') {
-			echo "<div class='alert alert-warning alert-dismissible ' role='alert'>
-						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>
-						<strong>Choose a payment rate!</strong>
-					</div>";
-		}
-		
-	}
-	*/
 ?>
 
 
