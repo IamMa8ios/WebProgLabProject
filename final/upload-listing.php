@@ -23,25 +23,47 @@
 					
 					if ($con){
 						
+						$con->autocommit(false);
+						
 						session_start();
-						$stmt = $con->prepare("SELECT id FROM users WHERE username=?");
+						//find user id
+						$stmt = $con->prepare("SELECT `id` FROM `users` WHERE `username`=?");
 						$stmt->bind_param("s", $_SESSION['username']);
 						//echo "username ".$_SESSION['username']."<br>";
 						$stmt->execute();
-						
 						$stmt->bind_result($text);
 						$stmt->fetch();
-						$freelancerID = intval($text);
-						/*echo "id ".$freelancerID."<br>";
-						echo "amount ".$amount."<br>";*/
-						
+						$userID = intval($text);
 						$stmt->free_result();
+						
+						//get id for job level
+						$stmt = $con->prepare("SELECT `id` FROM `exp_levels` WHERE `exp_level`=?");
+						$stmt->bind_param("s", $_POST['exp_level']);
+						$stmt->execute();
+						$result=$stmt->get_result();
+						$stmt->bind_result($text);
+						$stmt->fetch();
+						$level = intval($text);
+						$stmt->free_result();
+						
+						$stmt = $con->prepare("SELECT `id` FROM `payment_rates` WHERE `rate`=?");
+						$stmt->bind_param("s", $_POST['rate']);
+						$stmt->execute();
+						$result=$stmt->get_result();
+						$stmt->bind_result($text);
+						$stmt->fetch();
+						$rate = intval($text);
+						$stmt->free_result();
+						
 						$stmt = $con->prepare("INSERT INTO
-    					freelancer_listings (freelancerID, job_title, job_level, payment_amount, payment_rate, techs, location, description)
+    					listings (userID, job_title, job_level, payment_amount, payment_rate, techs, location, description)
 						VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-						$stmt->bind_param("issdssss", $freelancerID, $jobTitle, $exp_level, $amount, $rate, $techs, $location, $description);
+						$stmt->bind_param("isidisss", $userID, $jobTitle, $level, $amount, $rate, $techs, $location, $description);
 						
 						$stmt->execute();
+						
+						$con->commit();
+						$con->autocommit(true);
 						
 						$stmt->close();
 						$con->close();

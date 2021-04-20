@@ -1,10 +1,9 @@
 <?php
-	
 	//listingID freelancerID job_title job_level payment_amount payment_rate techs location description date_submitted status last_update
 	
-	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['active'])) {
+	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['status'])) {
 		
-		if ($_SESSION['role'] == 'Freelancer' && $_SESSION['active'] == 'yes') {
+		if ($_SESSION['role'] == 'Freelancer' && $_SESSION['status'] == 'Active') {
 			
 			$con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
 			
@@ -19,7 +18,7 @@
 			$stmt->free_result();
 			
 			$stmt = $con->prepare("SELECT `job_title`, `job_level`, `techs`, `payment_amount`, `payment_rate`,
-       						`location`, `date_submitted`, `status` FROM `freelancer_listings` WHERE `freelancerID`=?");
+       						`location`, `date_submitted`, `status` FROM `listings` WHERE `userID`=?");
 			$stmt->bind_param("i", $userID);
 			$stmt->execute();
 			
