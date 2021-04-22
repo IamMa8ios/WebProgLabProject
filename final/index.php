@@ -3,15 +3,15 @@
 	session_start();
 	
 	if (!isset($_SESSION['username'])) {
-		header("Location: login.php");
+		header("Location: account/login.php");
 	}
 	
 	if (!isset($_SESSION['role'])) {
-		header("Location: login.php");
+		header("Location: account/login.php");
 	}
 	
 	if (!isset($_SESSION['status'])) {
-		header("Location: login.php");
+		header("Location: account/login.php");
 	}
 	
 	if ($_SESSION['role'] == 'Admin') {

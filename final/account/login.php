@@ -54,35 +54,49 @@
 						// Bind result variables
 						$stmt->bind_result($id, $username, $pass, $role, $status);
 						if($stmt->fetch()){
-						 
-//							echo $id . "<br>";
-//							echo $username . "<br>";
-//							echo $pass . "<br>";
-//							echo $role . "<br>";
-//							echo $status . "<br>";
-//							echo $password . "<br>";
 							
 							if(password_verify($password, $pass)){
-								// Password is correct, so start a new session
-								session_start();
 								
-								// Store data in session variables
-								$_SESSION["loggedin"] = true;
-								$_SESSION["id"] = $id;
-								$_SESSION["username"] = $username;
-								$_SESSION["role"] = $role;
-								$_SESSION["status"] = $status;
+								$mysqli->autocommit(false);
+								$stmt->free_result();
 								
-								// Redirect user to welcome page
-								header("location: ../index.php");
+								$sql="UPDATE `users` SET `last_login`=CURRENT_TIMESTAMP() WHERE `id`=? AND `username`=?";
+								$stmt->prepare($sql);
+								$stmt->bind_param("is", $id, $username);
+								
+								if($stmt->execute()){
+								    
+								    $mysqli->commit();
+									$mysqli->autocommit(true);
+								    
+								    // Password is correct, so start a new session
+									session_start();
+									
+									// Store data in session variables
+									$_SESSION["loggedin"] = true;
+									$_SESSION["id"] = $id;
+									$_SESSION["username"] = $username;
+									$_SESSION["role"] = $role;
+									$_SESSION["status"] = $status;
+									
+									// Redirect user to welcome page
+									header("location: ../index.php");
+                                }else{
+								    
+									$mysqli->autocommit(true);
+									
+									$login_err="Error while logging in.";
+                                }
+								
+								
 							} else{
 								// Password is not valid, display a generic error message
-								$login_err = "Invalid username or password 2.";
+								$login_err = "Invalid username or password.";
 							}
 						}
 					} else{
 						// Username doesn't exist, display a generic error message
-						$login_err = "Invalid username or password 1.";
+						$login_err = "Invalid username or password.";
 					}
 				} else{
 					echo "Oops! Something went wrong. Please try again later.";

@@ -1,7 +1,7 @@
 <?php
     session_start();
 	if(!(isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['status']) && $_SESSION['status']=='Pending Confirmation')){
-	    header("Location: login.php");
+	    header("Location: account/login.php");
     }
 ?>
 
@@ -25,13 +25,13 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
+<body class="">
 
 <div class="container body">
     <div class="main_container">
 
         <!-- top navigation -->
-		<?php include("navigation-top.php"); ?>
+		<?php include("navigation-top2.php"); ?>
         <!-- /top navigation -->
 
         <!-- page content -->
