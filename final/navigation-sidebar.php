@@ -27,51 +27,55 @@
 					
 					<?php
 						
-						if (isset($_SESSION['role'])) {
+						if (isset($_SESSION['role']) && isset($_SESSION['status'])) {
 							
-							
-							if ($_SESSION['role'] == 'Admin') {
-								echo "<!-- Manage Users -->
-                    <li><a><i class='fa fa-edit'></i> Users <span class='fa fa-chevron-down'></span></a>
-                        <ul class='nav child_menu'>
-                            <li><a href='form.html'>New Applications</a></li>
-                            <li><a href='form_advanced.html'>Businesses</a></li>
-                            <li><a href='form_validation.html'>Freelancers</a></li>
-                            <li><a href='form_wizards.html'>Suspended</a></li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Manage Polls -->
-                    <li><a><i class='fa fa-bar-chart-o'></i> Polling <span class='fa fa-chevron-down'></span></a>
-                        <ul class='nav child_menu'>
-                            <li><a href='chartjs.html'>Create New</a></li>
-                            <li><a href='chartjs2.html'>Ongoing</a></li>
-                            <li><a href='morisjs.html'>History</a></li>
-                        </ul>
-                    </li>";
-							} elseif ($_SESSION['role'] == 'Freelancer') {
-								echo "<!-- Manage Listings -->
-                    <li><a><i class='fa fa-edit'></i> Listings <span class='fa fa-chevron-down'></span></a>
-                        <ul class='nav child_menu'>
-                            <li><a href='listings-new.php'>New Listing</a></li>
-                            <li><a href='listings-others.php'>Business Listings</a></li>
-                            <li><a href='listings-personal.php'>Manage My Listings</a></li>
-                        </ul>
-                    </li>
-        
-                    <!-- Statistics -->
-                    <li><a><i class='fa fa-bar-chart-o'></i> Statistics </a></li>";
-							} elseif ($_SESSION['role'] == 'Business') {
-							
-							} else {
-								header("Location: index.php");
+							if ($_SESSION['status'] == 'Active') {
+								if ($_SESSION['role'] == 'Admin') { ?>
+                                    <!-- Manage Users -->
+                                    <li><a><i class='fa fa-edit'></i> Users <span class='fa fa-chevron-down'></span></a>
+                                        <ul class='nav child_menu'>
+                                            <li><a href='form.html'>New Applications</a></li>
+                                            <li><a href='form_advanced.html'>Businesses</a></li>
+                                            <li><a href='form_validation.html'>Freelancers</a></li>
+                                            <li><a href='form_wizards.html'>Suspended</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <!-- Manage Polls -->
+                                    <li><a><i class='fa fa-bar-chart-o'></i> Polling <span
+                                                    class='fa fa-chevron-down'></span></a>
+                                        <ul class='nav child_menu'>
+                                            <li><a href='chartjs.html'>Create New</a></li>
+                                            <li><a href='chartjs2.html'>Ongoing</a></li>
+                                            <li><a href='morisjs.html'>History</a></li>
+                                        </ul>
+                                    </li>
+									<?php
+								} else {
+									$listings = '';
+									if ($_SESSION['role'] == 'Freelancer') {
+										$listings = 'Business Listings';
+									}
+									
+									if ($_SESSION['role'] == 'Business') {
+										$listings = 'Freelancer Listings';
+									} ?>
+                                    <!-- Manage Listings -->
+                                    <li><a><i class='fa fa-edit'></i> Listings <span class='fa fa-chevron-down'></span></a>
+                                        <ul class='nav child_menu'>
+                                            <li><a href='listings-new.php'>New Listing</a></li>
+                                            <li><a href='listings-others.php'><?php echo $listings; ?></a></li>
+                                            <li><a href='listings-personal.php'>Manage My Listings</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <!-- Statistics -->
+                                    <li><a><i class='fa fa-bar-chart-o'></i> Statistics </a></li>
+								<?php }
+							}else{
+							    header("Location: index.php");
 							}
-							
-							echo "";
-							
-							
-						}
-					?>
+						} ?>
                 </ul>
             </div>
         </div>

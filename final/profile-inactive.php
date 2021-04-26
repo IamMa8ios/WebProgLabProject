@@ -1,6 +1,4 @@
-<?php
-	include("../session-access.php");
-?>
+<?php include("session-access.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +26,7 @@
 	<div class="main_container">
 		
 		
-		<?php include("../navigation-top2.php"); ?>
+		<?php include("navigation-top2.php"); ?>
 		
 		<!-- page content -->
 		<div class="right_col" role="main">
