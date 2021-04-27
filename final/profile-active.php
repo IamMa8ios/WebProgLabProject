@@ -63,7 +63,7 @@
                             <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
                             <label class="col-form-label col-md-3 col-sm-3 ">Gender</label>
                             <div class="col-md-6 col-sm-6 ">
                                 <div id="gender" class="btn-group" data-toggle="buttons">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
                             <label class="col-form-label col-md-3 col-sm-3 ">Date Of Birth</label>
                             <div class="col-md-9 col-sm-9 ">
                                 <input class="date-picker form-control"
@@ -97,7 +97,6 @@
                             </div>
                         </div>
 
-                        <div class="ln_solid"></div>
                         <div class="form-group row">
                             <div class="col-md-9 col-sm-9  offset-md-3">
                                 <?php if ($disabled == "") { ?>
