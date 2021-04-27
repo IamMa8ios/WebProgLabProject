@@ -83,7 +83,7 @@
                             <label class="col-form-label col-md-3 col-sm-3 ">Date Of Birth</label>
                             <div class="col-md-9 col-sm-9 ">
                                 <input class="date-picker form-control"
-                                       placeholder="<?php echo date("d-m-Y", strtotime($birthday)); ?>" type="text" type="text"
+                                       placeholder="<?php echo date("d-m-Y", strtotime($birthday)); ?>" type="text"
                                        onfocus="this.type='date'" onmouseover="this.type='date'"
                                        onclick="this.type='date'" onblur="this.type='text'"
                                        onmouseout="timeFunctionLong(this)" <?php echo $disabled; ?>>
