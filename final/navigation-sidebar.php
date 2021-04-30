@@ -34,10 +34,8 @@
                                     <!-- Manage Users -->
                                     <li><a><i class='fa fa-edit'></i> Users <span class='fa fa-chevron-down'></span></a>
                                         <ul class='nav child_menu'>
-                                            <li><a href='form.html'>New Applications</a></li>
-                                            <li><a href='form_advanced.html'>Businesses</a></li>
-                                            <li><a href='form_validation.html'>Freelancers</a></li>
-                                            <li><a href='form_wizards.html'>Suspended</a></li>
+                                            <li><a href='test-3to1.php'>Manage Users</a></li>
+                                            <li><a href='suspended-users.php'>Suspended</a></li>
                                         </ul>
                                     </li>
 
