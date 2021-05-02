@@ -1,5 +1,6 @@
 <?php
 	include("../../account/session-access.php");
+	include("../../listings/load/listing-loader.php");
 ?>
 
 <!DOCTYPE html>
@@ -50,23 +51,24 @@
                             <th>
                                 <input type="checkbox" id="check-all" class="flat"></th>
                             </th>
+                            <th class="column-title">ID</th>
                             <th class="column-title">Job Title</th>
                             <th class="column-title">Level</th>
-                            <th class="column-title">Techs</th>
                             <th class="column-title">Payment</th>
+                            <th class="column-title">Techs</th>
                             <th class="column-title">Location</th>
                             <th class="column-title">Date Submitted</th>
                             <th class="column-title">Status</th>
                             <th class="column-title no-link last"><span class="nobr">Action</span>
                             </th>
-                            <th class="bulk-actions" colspan="8">
+                            <th class="bulk-actions" colspan="9">
                                 <a class="antoo" style="color:#fff; font-weight:500;">Select All ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
                             </th>
                         </tr>
                         </thead>
 
                         <tbody>
-                            <?php include("../../listings/load/listings.php"); ?>
+                            <?php loadListings(); ?>
                         </tbody>
                     </table>
                 </div>

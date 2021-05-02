@@ -1,37 +1,28 @@
 <?php
-// database connection code
-// $con = mysqli_connect('localhost', 'database_user', 'database_password','database');
 	
-	include_once "../../account/config.php";
-	
+	include_once "../../query-executor.php";
+
+	$mysqli=connect();
+
 	if ($mysqli) {
 		
+		$stmt = getStatement($mysqli,"SELECT `rate` From `payment_rates` ORDER BY id ASC");
+		$result = fetchResults($stmt);
 		
-		$stmt = $mysqli->prepare("SELECT rate From `payment_rates` ORDER BY id ASC");
-		
-		$stmt->execute();
-		
-		$result = $stmt->execute();
-		
-		if ($result) {//check if any data exists
-			
-			$stmt->bind_result($rate);
-			
-			//fetch values
-			while ($stmt->fetch()) {
-				echo"<option>".$rate."</option>";
+		if (sizeof($result)>0) {//check if any data exists
+
+			for ($i=0;$i<sizeof($result);$i++){
+				echo"<option>". $result[$i]['rate'] ."</option>";
 			}
 			
 		} else {
 			echo "ERROR WHILE COMMUNICATING WITH HOST";
 		}
-		
-		$stmt->close();
-		
+
+        disconnect($mysqli);
 	} else {
 		echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
 	}
-	
-	$mysqli->close();
+
 
 ?>

@@ -36,5 +36,4 @@
 		echo "YOU ARE A GUEST";
 	}
 
-
 ?>

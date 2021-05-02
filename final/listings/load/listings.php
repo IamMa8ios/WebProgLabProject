@@ -1,70 +1,48 @@
 <?php
-	//listingID freelancerID job_title job_level payment_amount payment_rate techs location description date_submitted status last_update
 	
 	if (isset($_SESSION) && isset($_SESSION['role']) && isset($_SESSION['status'])) {
 		
 		if ($_SESSION['role'] == 'Freelancer' && $_SESSION['status'] == 'Active') {
 			
-			include_once "../../account/config.php";
-			
+			include_once "../../query-executor.php";
+
+			$mysqli=connect();
+
 			if($mysqli){
-				$stmt = $mysqli->prepare("SELECT `id` FROM `users` WHERE `username`=?");
+
+			    $stmt=getStatement($mysqli, "SELECT `id` FROM `users` WHERE `username`=?");
 				$stmt->bind_param("s", $_SESSION['username']);
-				$stmt->execute();
-				$stmt->bind_result($id_result);
-				$stmt->fetch();
+				$results=fetchResults($stmt);
 				
-				$userID = intval($id_result);
-				$stmt->free_result();
+				$userID = $results[0]['id'];
 				
-				$stmt = $mysqli->prepare("SELECT `id` FROM `listings` WHERE `userID`=?");
+				$stmt = getStatement($mysqli, "SELECT `l`.`id`, `job_title`, `techs`, `payment_amount`, `location`,
+                                            `date_submitted`, `status`, `exp_level`, `rate`
+                                            FROM `listings` AS `l`, `exp_levels` AS el, `payment_rates` AS pr
+                                            WHERE `userID`=? AND `el`.`id`=`job_level` AND `pr`.`id`=`payment_rate`");
 				$stmt->bind_param("i", $userID);
-				$stmt->execute();
+                $results=fetchResults($stmt);
 				
-				$stmt->bind_result($id_result);
-				
-				$id_results = array();
-				
-				while ($stmt->fetch()) {
-					array_push($id_results, $id_result);
-				}
-				
-				$stmt->free_result();
-				
-				$stmt = $mysqli->prepare("SELECT `job_title`, `techs`, `payment_amount`, `location`, `date_submitted`,
-       									`status`, `exp_level`, `rate`
-										FROM `listings`, `exp_levels` AS el, `payment_rates` AS pr
-										WHERE `userID`=? AND `el`.`id`=`job_level` AND `pr`.`id`=`payment_rate`");
-				$stmt->bind_param("i", $userID);
-				$stmt->execute();
-				
-				if ($stmt->bind_result($title, $techs, $amount, $location, $date, $status, $level, $rate)) {
-					
-					while ($stmt->fetch()) { ?>
+				for ($i=0;$i<sizeof($results);$i++){ ?>
                         <tr class='odd pointer'>
                             <td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>
-                            <td> <?php echo $title ?> </td>
-                            <td> <?php echo $level ?> </td>
-                            <td> <?php echo $techs ?> </td>
-                            <td>$<?php echo $amount . "/" . $rate ?> </td>
-                            <td> <?php echo $location ?> </td>
-                            <td> <?php echo $date ?> </td>
-                            <td> <?php echo $status ?> </td>
+                            <td> <?php echo $results[$i]['id'] ?> </td>
+                            <td> <?php echo $results[$i]['job_title'] ?> </td>
+                            <td> <?php echo $results[$i]['exp_level'] ?> </td>
+                            <td> $<?php echo $results[$i]['payment_amount'] ?>/<?php echo $results[$i]['rate'] ?> </td>
+                            <td> <?php echo $results[$i]['techs'] ?> </td>
+                            <td> <?php echo $results[$i]['location'] ?> </td>
+                            <td> <?php echo $results[$i]['date_submitted'] ?> </td>
+                            <td> <?php echo $results[$i]['status'] ?> </td>
                             <td class=' last'><i href='#'>View</i>
                         </tr>
-						<?php
-					}
-					
-				}
-				
-				$stmt->close();
-				$mysqli->close();
+				<?php }
+
+				disconnect($mysqli);
             }
 			
 		}
 		
 	}
 
-	//TODO:optimize code
-	//TODO:handle exceptions in separate pages
 ?>

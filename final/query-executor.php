@@ -1,76 +1,112 @@
 <?php
-	function executeUpdate($sql, $types, $params){
-		
-		$queryExecuted=false;
-		
-		if ($stmt = $mysqli->prepare($sql)) {
-			// Bind variables to the prepared statement as parameters
-			
-			if(count($params)>1){
-				$param1=array_shift($params);
-				$stmt->bind_param($types, $param1, $params);
-			}else{
-				$stmt->bind_param($types, $params);
-			}
-			
-			$mysqli->autocommit(false);
-			
-			// Attempt to execute the prepared statement
-			if ($stmt->execute()) {
-				
-				$queryExecuted=true;
-				$mysqli->commit();
-				
-			} else {
-				echo "Oops! Something went wrong. Please try again later.";
-			}
-			
-			
-			$mysqli->autocommit(true);
-			// Close statement
-			$stmt->close();
-			
-		}
-		
-		return $queryExecuted;
-		
-	}
-	
-	function fetchResults($sql, $types, $params){
-		
-		$results=array();
-		
-		if ($stmt = $mysqli->prepare($sql)) {
-			// Bind variables to the prepared statement as parameters
-			
-			if(count($params)>1){
-				$param1=array_shift($params);
-				$stmt->bind_param($types, $param1, $params);
-			}else{
-				$stmt->bind_param($types, $params);
-			}
-			
-			$mysqli->autocommit(false);
-			
-			// Attempt to execute the prepared statement
-			if ($stmt->execute()) {
-				// store result
-				$stmt->store_result();
-				
-				
-				
-			} else {
-				echo "Oops! Something went wrong. Please try again later.";
-			}
-			
-			$mysqli->commit();
-			$mysqli->autocommit(true);
-			
-			// Close statement
-			$stmt->close();
-		}
-		
-		
-	}
-	
+
+function connect(){
+
+    /* Attempt to connect to MySQL database */
+    $mysqli = new mysqli('localhost', 'root', '', 'bytes4hire');
+
+    // Check connection
+    if($mysqli === false){
+        die("ERROR: Could not connect. " . $mysqli->connect_error);
+    }
+
+    return $mysqli;
+}
+
+function disconnect($mysqli){
+    $mysqli->close();
+}
+
+function getStatement($mysqli, $sql){
+
+    if($mysqli) {
+        if ($stmt = $mysqli->prepare($sql)) {
+            return $stmt;
+        }
+    }
+
+    return null;
+}
+
+function executeUpdate($stmt)
+{
+    $executed=false;
+
+    if($stmt){
+
+        if($stmt->execute()){
+            $executed=true;
+        }
+
+        $stmt->close();
+    }
+
+
+    return $executed;
+
+}
+
+function fetchResults($stmt)
+{
+    $data=array();
+
+    if($stmt){
+
+        if($stmt->execute()){
+
+            $results = $stmt->get_result();
+
+            while ($row = $results->fetch_assoc()) {
+                array_push($data, $row);
+            }
+
+        }
+
+        $stmt->close();
+    }
+
+
+
+    return $data;
+
+}
+
+
+//    require_once "account/config.php";
+//
+//    $values=array("username", "email", "pass", "Freelancer", "Active");
+//    //executeUpdate("INSERT INTO `users`(`username`, `email`, `pass`, `role`, `status`) VALUES(?,?,?,?,?)", "sssss", $values);
+//
+//    $mysqli=connect();
+//    $stmt=getStatement($mysqli, "SELECT `exp_level` From `exp_levels`");
+//    echo "<pre>";
+//    print_r(fetchResults($mysqli, $stmt));
+//    echo "</pre>";
+//    $mysqli=connect();
+//    $stmt=getStatement($mysqli, "SELECT `exp_level` From `exp_levels`");
+//    $results=fetchResults($mysqli, $stmt);
+//    $row=$results[0];
+//    echo $results[0]['exp_level'];
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

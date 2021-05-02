@@ -1,5 +1,6 @@
 <?php
 	include("../../account/session-access.php");
+    include("../../listings/load/listing-loader.php");
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <select class="form-control" name="exp_level">
                             <option>Choose option</option>
-							<?php include("../../listings/load/explevels.php"); ?>
+							<?php loadExp(); ?>
                         </select>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <select class="form-control" name="rate">
                             <option>Choose option</option>
-							<?php include("../../listings/load/rates.php"); ?>
+							<?php loadRates(); ?>
                         </select>
                     </div>
                 </div>
@@ -109,7 +110,7 @@
                 <div class="form-group">
                     <div class="col-md-9 col-sm-9  offset-md-3">
                         <button type="reset" class="btn btn-primary">Reset</button>
-                        <button type="submit" name="submit_button" value="freelancer_listing"
+                        <button type="submit" name="submit_button" value="Post_Listing"
                                 class="btn btn-success">Submit
                         </button>
                     </div>
