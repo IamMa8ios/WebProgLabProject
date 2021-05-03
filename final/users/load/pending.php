@@ -1,118 +1,67 @@
 <?php
+require_once "C:/xampp/htdocs/gentelella-master/final/query-executor.php";
+require_once "C:/xampp/htdocs/gentelella-master/final/users/upload/approve.php";
 
-function loadUserWithStatus($userStatus){
+function loadUsersWithStatus($userStatus){
     if (isset($_SESSION) && isset($_SESSION['role'])) {
 
-        $con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
+        $con = connect();
 
         if ($con) {
-            $stmt = $con->prepare("SELECT * FROM `users` WHERE `status`= ?");
+            $stmt = getStatement($con, "SELECT * FROM `users` WHERE `status`= ?");
 
-            $stmt->bind_param("s", $str);
-            $str = $userStatus;
+            $stmt->bind_param("s", $userStatus);
             $stmt->execute();
+            $results = fetchResults($stmt);
 
-            $results = $stmt->get_result();
+            printUsers($results, $userStatus);
 
-            while ($row = $results->fetch_assoc()) { ?>
-                <tr>
-                    <td><?php echo $row['id'] ?></td>
-                    <td><?php echo $row['username'] ?></td>
-                    <td><?php echo $row['email'] ?></td>
-                    <td><?php echo $row['role'] ?></td>
-                    <td><?php echo $row['registration_date'] ?></td>
-                    <td>
-                        <?php
-                        if ($userStatus == "Pending Confirmation") { ?>
-                            <a href="../upload/approve.php?userID= <?php echo $row['id'] ?>&action=activate" class="mr-3"
-                               title="Approve" data-placement="auto" data-toggle="tooltip"><span class="glyphicon glyphicon-ok-circle"></span></a>
-                            <a href="../upload/approve.php?userID= <?php echo $row['id'] ?>&action=delete" class="mr-3"
-                               title="Dismiss" data-placement="auto" data-toggle="tooltip"><span
-                                        class="glyphicon glyphicon-remove-circle"></span></a>
-                        <?php } elseif ($userStatus == "Suspended") { ?>
-                            <a href="../upload/approve.php?id= <?php echo $row['id'] ?>&action=activate" class="mr-3"
-                               title="Activate" data-placement="auto" data-toggle="tooltip"><span class="glyphicon glyphicon-ok-circle"></span></a>
-                            <a href="../upload/approve.php?id= <?php echo $row['id'] ?>&action=delete" class="mr-3"
-                               title="Delete" data-placement="auto" data-toggle="tooltip"><span class="glyphicon glyphicon-remove-circle"></span></a>
-                        <?php } ?>
-                    </td>
-                </tr>
-                <?php
-            }
-        }
-    }
-}
-
-function approve($id_del)
-{
-    $con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
-
-    if ($con) {
-        $stmt = $con->prepare("UPDATE users SET status = 'Active' WHERE id = ?");
-
-        $stmt->bind_param("i", $id_del);
-        $stmt->execute();
-    }
-}
-
-function setStatus($status)
-{
-    if (isset($_SESSION) && isset($_SESSION['role'])) {
-        if(isset($_POST) && $_POST['btnApprove'] == "Approve"){
-
-        }
-
-        include_once 'account/config.php';
-
-        if ($mysqli) {
-            $stmt = $mysqli->prepare("UPDATE `users` SET `status` = ? WHERE `users`.`id` = ?");
-
-            $stmt->bind_param("s", $str);
-            $str = $userStatus;
-            $stmt->execute();
-
-            $results = $stmt->get_result();
+            disconnect($con);
         }
     }
 
-
-
-
 }
 
-function loadTypeOfUser($typeOfUser){
+function loadUsersWithRole($role, $status){
+
     if (isset($_SESSION) && isset($_SESSION['role'])) {
 
-        $con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
+        $con=connect();
 
         if($con){
-            $stmt = $con->prepare("SELECT * FROM `users` WHERE `status`= ? AND `role`=?");
 
-            $stmt->bind_param("ss", $s_status, $s_role);
-            $s_status = "Active";
-            $s_role = $typeOfUser; // role to pull from db -> based on $typeOfUser
-            $stmt->execute();
+            $stmt = getStatement($con, "SELECT * FROM `users` WHERE `status`= ? AND `role`=?");
+            $stmt->bind_param("ss", $status, $role);
+            $results = fetchResults($stmt);
 
-            $results = $stmt->get_result();
+            printUsers($results, $status);
 
-            while($row = $results->fetch_assoc()){ ?>
-                <tr>
-                    <td><?php echo $row['id']  ?></td>
-                    <td><?php echo $row['username']  ?></td>
-                    <td><?php echo $row['email']  ?></td>
-                    <td><?php echo $row['role']  ?></td>
-                    <td><?php echo $row['registration_date']  ?></td>
-                    <td><?php echo $row['last_update']  ?></td>
-                    <td><?php echo $row['last_login']  ?></td>
-                    <td>
-                        <form method="POST">
-                            <input type="submit" name="btnApprove" class="btn-small btn-success" value="Approve"/>
-                            <input type="submit" name="btnDismiss" class="btn-small btn-danger" value="Dismiss"/>
-                        </form>
-                    </td>
-                </tr>
-                <?php
-            }
+            disconnect($con);
         }
     }
 }
+
+function printUsers($users, $status){
+
+    foreach ($users as $user){ ?>
+        <tr>
+            <td><?php echo $user['id']  ?></td>
+            <td><?php echo $user['username']  ?></td>
+            <td><?php echo $user['email']  ?></td>
+            <td><?php echo $user['role']  ?></td>
+            <td><?php echo $user['registration_date']  ?></td>
+            <td>
+                <?php loadButtons($user['id'], $status); ?>
+            </td>
+        </tr>
+        <?php
+    }
+
+}
+
+function loadButtons($id, $status){ ?>
+    <a href="../upload/approve.php?id=<?php echo $id ?>&action=accept&status=<?php echo $status ?>" class="mr-3"
+       title="Accept" data-placement="auto" data-toggle="tooltip"><span class="glyphicon glyphicon-ok-circle"></span></a>
+    <a href="../upload/approve.php?id= <?php echo $id ?>&action=decline&status=<?php echo $status ?>" class="mr-3"
+       title="Decline" data-placement="auto" data-toggle="tooltip"><span class="glyphicon glyphicon-remove-circle"></span></a>
+<?php } ?>

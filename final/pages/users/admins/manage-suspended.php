@@ -70,7 +70,7 @@
                                         </thead>
 
                                         <tbody>
-                                        <?php loadUserWithStatus("Suspended"); ?>
+                                        <?php loadUsersWithStatus("Suspended"); ?>
                                         </tbody>
                                     </table>
                                 </div>

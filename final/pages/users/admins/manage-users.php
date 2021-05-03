@@ -68,7 +68,7 @@
                                             </thead>
 
                                             <tbody>
-                                            <?php loadUserWithStatus("Pending Confirmation"); ?>
+                                            <?php loadUsersWithStatus("Pending Confirmation"); ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -99,7 +99,7 @@
                                             </thead>
 
                                             <tbody>
-                                            <?php loadTypeOfUser("Business"); ?>
+                                            <?php loadUsersWithRole("Business"); ?>
                                             </tbody>
                                         </table>
 
@@ -131,7 +131,7 @@
                                             </thead>
 
                                             <tbody>
-                                            <?php loadTypeOfUser("Freelancer"); ?>
+                                            <?php loadUsersWithRole("Freelancer"); ?>
                                             </tbody>
                                         </table>
 

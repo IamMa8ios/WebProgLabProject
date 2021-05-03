@@ -35,6 +35,7 @@ function executeUpdate($stmt)
     if($stmt){
 
         if($stmt->execute()){
+            $stmt->commit();
             $executed=true;
         }
 
