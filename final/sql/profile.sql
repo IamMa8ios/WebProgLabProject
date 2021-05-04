@@ -12,5 +12,5 @@ CREATE TABLE `profiles`(
                           FOREIGN KEY (email) REFERENCES users(email)
 )
 
-INSERT INTO `profile` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `gender`, `birthday`)
+INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `gender`, `birthday`)
 VALUES (NULL, '16', 'Freelancer', 'Active', NULL, '6941231231', 'M', '1998-11-13');
