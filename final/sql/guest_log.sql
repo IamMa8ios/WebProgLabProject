@@ -1,7 +1,0 @@
-CREATE TABLE guest_log(
-    id INT AUTO_INCREMENT,
-    date_visited DATETIME DEFAULT CURRENT_TIMESTAMP() NOT NULL,
-    PRIMARY KEY(id)
-);
-
-INSERT INTO guest_log(id) VALUES(NULL);
