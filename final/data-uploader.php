@@ -15,91 +15,85 @@
 				$mysqli->autocommit(true);
 			}
 		}
-		
+		disconnect($mysqli);
 	}
 	
-	function uploadListing(){
+	function uploadListing($data, $action){
 		
-		if (isset($_POST)) {//check if data was given
+		$con=connect();
+		
+		if ($con){
 			
-			$submitted = $_POST['submit_button'];
+			$con->autocommit(false);
 			
-			if (isset($submitted)) {//check if it came through a valid channel
+			$sql="SELECT `id` FROM `payment_rates` WHERE `rate`=?";
+			$stmt=getStatement($con, $sql);
+			
+			if($stmt){
 				
-				if ($submitted == 'freelancer_listing') {//check type of listing
+				$stmt->bind_param("s", $data['rate']);
+				$result=fetchResults($stmt);
+				
+				if (sizeof($result)==1){
+				
+					$rateID=$result[0]['id'];
+					$sql="SELECT `id` FROM `exp_levels` WHERE `exp_level`=?";
+					$stmt=getStatement($con, $sql);
 					
-					$exp_level = $_POST['exp_level'];
-					$rate=$_POST['rate'];
-					$jobTitle = $_POST['job_title'];
-					$amount = doubleval($_POST['amount']);
-					$techs = $_POST['techs'];
-					$location = $_POST['location'];
-					$description = $_POST['description'];
-					
-					if (isset($jobTitle) && isset($amount) && isset($techs) && isset($location) && isset($description) &&
-						isset($rate) && isset($exp_level) && $rate!='Choose option' && $exp_level!='Choose option'){
+					if($stmt){
 						
-						$con = mysqli_connect('127.0.0.1', 'root', '', 'bytes4hire');
+						$stmt->bind_param("s", $data['exp_level']);
+						$result=fetchResults($stmt);
 						
-						if ($con){
+						if (sizeof($result)==1){
 							
-							$con->autocommit(false);
+							$expID=$result[0]['id'];
 							
-							$id_results=array();
+							if($action=='Create'){
+								$sql="INSERT INTO `listings`(`userID`, `job_title`, `job_level`, `payment_amount`,
+                       					`payment_rate`, `techs`, `location`, `description`)
+										VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+								$stmt=getStatement($con, $sql);
+								$stmt->bind_param("isidisss", $_SESSION['id'], $data['job_title'], $data['exp_level'],
+								$data['amount'], $data['rate'], $data['techs'], $data['location'], $data['description']);
+							}elseif ($action=='Update'){
+								$sql="UPDATE `listings` SET `job_title`=?, `job_level`=?, `payment_amount`=?, `payment_rate`=?,
+                      					`techs`=?, `location`=?, `description`=?, `last_edit`=CURRENT_TIMESTAMP()
+										WHERE `userID`=? AND `id`=?;";
+								$stmt=getStatement($con, $sql);
+								$stmt->bind_param("sidisssii", $data['job_title'], $expID, $data['amount'], $rateID,
+									$data['techs'], $data['location'], $data['description'], $_SESSION['id'], $data['id']);
+							}
 							
-							session_start();
-							//find user id
-							$stmt = $con->prepare("SELECT `id` FROM `users` WHERE `username`=?");
-							$stmt->bind_param("s", $_SESSION['username']);
-							//echo "username ".$_SESSION['username']."<br>";
-							$stmt->execute();
-							$stmt->bind_result($text);
-							$stmt->fetch();
-							array_push($id_results, $text);
-							$stmt->free_result();
+							executeUpdate($stmt);
 							
-							//get id for job level
-							$stmt = $con->prepare("SELECT `id` FROM `exp_levels` WHERE `exp_level`=?");
-							$stmt->bind_param("s", $_POST['exp_level']);
-							$stmt->execute();
-							$stmt->bind_result($text);
-							$stmt->fetch();
-							array_push($id_results, $text);
-							$stmt->free_result();
-							
-							//get id for payment rate
-							$stmt = $con->prepare("SELECT `id` FROM `payment_rates` WHERE `rate`=?");
-							$stmt->bind_param("s", $_POST['rate']);
-							$stmt->execute();
-							$stmt->bind_result($text);
-							$stmt->fetch();
-							array_push($id_results, $text);
-							$stmt->free_result();
-							
-							$stmt = $con->prepare("INSERT INTO
-    					listings (userID, job_title, job_level, payment_amount, payment_rate, techs, location, description)
-						VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-							$stmt->bind_param("isidisss", $id_results[0], $jobTitle, $id_results[1], $amount, $id_results[2], $techs, $location, $description);
-							
-							$stmt->execute();
-							
-							$con->commit();
-							$con->autocommit(true);
-							
-							$stmt->close();
-							$con->close();
-							
-							header("Location: pages-user-listings-history.php");
+						}else{
+							header("Location: 500.php");
 							exit();
-							
 						}
 						
+					}else{
+						header("Location: 500.php");
+						exit();
 					}
-					
+				}else{
+					header("Location: 500.php");
+					exit();
 				}
 				
+			}else{
+				header("Location: 500.php");
+				exit();
 			}
 			
+			$con->autocommit(true);
+			
+			disconnect($con);
+			
+			header("Location: pages-user-listings-history.php");
+			exit();
+			
 		}
+		
 	}
 ?>

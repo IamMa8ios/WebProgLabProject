@@ -13,9 +13,10 @@
 				
 				$sql="SELECT `l`.`id` AS `id`, `job_title`, `techs`, `payment_amount`, `location`,
                                             `date_submitted`, `status`, `exp_level`, `rate`
-                                            FROM `listings` AS `l`, `exp_levels` AS el, `payment_rates` AS pr";
-				
+                                            FROM `listings` AS `l`, `exp_levels` AS el, `payment_rates` AS pr ";
 				$condition="";
+				$order="
+                                            ORDER BY `date_submitted` DESC";
 				if(isset($_SESSION['role']) && $_SESSION['role']==$owner){
 					$condition="
                                             WHERE `userID`=? AND `el`.`id`=`job_level` AND `pr`.`id`=`payment_rate`";
@@ -24,7 +25,7 @@
                                             WHERE `userID`<>? AND `el`.`id`=`job_level` AND `pr`.`id`=`payment_rate`";
 				}
 				
-				$stmt=getStatement($mysqli, $sql.$condition);
+				$stmt=getStatement($mysqli, $sql.$condition.$order);
 				if($stmt){
 					$stmt->bind_param("i", $_SESSION['id']);
 					
@@ -43,7 +44,11 @@
 								<td> <?php echo $row['location'] ?> </td>
 								<td> <?php echo $row['date_submitted'] ?> </td>
 								<td> <?php echo $row['status'] ?> </td>
-                                <td class=' last'><i href='#'>View</i></td>
+                                <td class='last'>
+                                    <form action="pages-user-listings-manage.php" method="post">
+                                        <button type="submit" name="view_button" value="<?php echo $row['id']; ?>" class="btn btn-success">View</button>
+                                    </form>
+                                </td>
 							</tr>
 						<?php                   }
 						
@@ -70,12 +75,82 @@
 		
 	}
 	
+	function loadListingData($listingID){
+	    
+	    $mysqli=connect();
+		
+		if($mysqli){
+			
+			$sql="SELECT `job_title`, `job_level`, `payment_amount`, `payment_rate`, `techs`, `location`, `description`, `status`
+                    FROM `listings` WHERE `userID`=? AND `id`=?";
+			$stmt=getStatement($mysqli, $sql);
+			
+			if($stmt){
+				
+				$listingID=10;
+				$userID=18;
+				
+				$stmt->bind_param("ii", $userID, $listingID);
+				$result=fetchResults($stmt);
+				
+				$data=$result[0];
+				
+				if($result!=null && sizeof($result)==1){
+					
+					$sql="SELECT `rate` FROM `payment_rates` WHERE `id`=?";
+					$stmt=getStatement($mysqli, $sql);
+					
+					if ($stmt){
+						
+						$stmt->bind_param("i", $data['payment_rate']);
+						$result=fetchResults($stmt);
+						
+						if(sizeof($result)==1) {
+							
+							$data['payment_rate'] = $result[0]['rate'];
+							
+							$sql = "SELECT `exp_level` FROM `exp_levels` WHERE `id`=?";
+							$stmt = getStatement($mysqli, $sql);
+							if ($stmt) {
+								
+								$stmt->bind_param("i", $data['job_level']);
+								
+								$result = fetchResults($stmt);
+								
+								if (sizeof($result) == 1) {
+									
+									$data['job_level'] = $result[0]['exp_level'];
+									return $data;
+								}
+							}
+						}
+					}
+					
+					return null;
+				}else{
+					header("Location: 500.php");
+					exit();
+				}
+				
+			}else{
+				header("Location: 500.php");
+				exit();
+			}
+			
+			disconnect($mysqli);
+		}else{
+		    header("Location: 500.php");
+		    exit();
+	    }
+	    
+    }
+	
 	function loadExpLevels(){
 		$con = connect();
 		
 		if ($con) {
 			
-			$stmt = getStatement($con, "SELECT `exp_level` From `exp_levels`");
+			$stmt = getStatement($con, "SELECT `exp_level` FROM `exp_levels`");
 			$result = fetchResults($stmt);
 			
 			if (sizeof($result)>0) { //check if any data exists
@@ -93,6 +168,40 @@
 		} else {
 			echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
 		}
+		
+	}
+	
+	function loadExpLevelsWithSelection($selection){
+		$con = connect();
+		
+		if ($con) {
+			
+			$stmt = getStatement($con, "SELECT `exp_level` FROM `exp_levels` WHERE `exp_level`<>?");
+			
+			if ($stmt){
+				
+				$stmt->bind_param("s", $selection);
+				$result = fetchResults($stmt);
+				
+				if (sizeof($result)>0) { //check if any data exists
+					
+					echo"<option>".$selection."</option>";
+					foreach ($result as $row){
+						echo"<option>".$row['exp_level']."</option>";
+					}
+					
+				} else {
+					echo "ERROR WHILE COMMUNICATING WITH HOST";
+				}
+				
+				disconnect($con);
+			} else {
+				echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
+			}
+		}else {
+			echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
+		}
+		
 		
 	}
 	
@@ -121,6 +230,39 @@
 		}
 		
 	}
+	
+	function loadRatesWithSelection($selection){
+		$mysqli=connect();
+		
+		if ($mysqli) {
+			
+			$stmt = getStatement($mysqli,"SELECT `rate` From `payment_rates` WHERE `rate`<>?");
+			
+			if($stmt){
+			    
+			    $stmt->bind_param("s", $selection);
+				$result = fetchResults($stmt);
+				
+				if (sizeof($result)>0) {//check if any data exists
+					
+					echo"<option>". $selection ."</option>";
+					foreach ($result as $row){
+						echo"<option>". $row['rate'] ."</option>";
+					}
+					
+				} else {
+					echo "ERROR WHILE COMMUNICATING WITH HOST";
+				}
+				
+            }else {
+				echo "ERROR WHILE COMMUNICATING WITH HOST";
+			}
+			
+			disconnect($mysqli);
+		} else {
+			echo "COULD NOT ESTABLISH CONNECTION WITH HOST";
+		}
+    }
 	
 	function loadProfile(){
 		

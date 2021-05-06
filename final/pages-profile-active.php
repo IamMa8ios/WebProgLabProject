@@ -59,7 +59,13 @@
 		
 		
 		<?php require_once "navigation-sidebar.php"; ?>
-		<?php require_once "navigation-top-user.php"; ?>
+		<?php
+            if ($_SESSION['role']=='Admin'){
+	            require_once "navigation-top-admin.php";
+            }else{
+	            require_once "navigation-top-user.php";
+            }
+		?>
 
         <!-- page content -->
         <div class="right_col" role="main">

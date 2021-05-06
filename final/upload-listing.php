@@ -1,74 +1,48 @@
 <?php
 	
 	require_once "scripts.php";
+	require_once "data-uploader.php";
+	require_once "data-loader.php";
 	
 	if (isset($_POST)) {//check if data was given
 		
-		if ( $_POST['submit_button'] == 'freelancer_listing' || $_POST['submit_button'] == 'business_listing') {//check type of listing
+		echo "posted<br>";
+		
+		echo "<pre>";
+		print_r($_POST);
+		echo "</pre>";
+		
+		if (isset($_POST['submit_button'])) {
 			
-			$exp_level = $_POST['exp_level'];
-			$rate=$_POST['rate'];
-			$jobTitle = $_POST['job_title'];
-			$amount = doubleval($_POST['amount']);
-			$techs = $_POST['techs'];
-			$location = $_POST['location'];
-			$description = $_POST['description'];
+			echo "submitted<br>";
 			
-			if (isset($jobTitle) && isset($amount) && isset($techs) && isset($location) && isset($description) &&
-				isset($rate) && isset($exp_level) && $rate!='Choose option' && $exp_level!='Choose option'){
+			$data['job_title'] = $_POST['job_title'];
+			$data['exp_level'] = $_POST['exp_level'];
+			$data['amount']= $_POST['amount'];
+			$data['rate'] = $_POST['rate'];
+			$data['techs'] = $_POST['techs'];
+			$data['location'] = $_POST['location'];
+			$data['description'] = $_POST['description'];
+			
+			if (isset($_POST['job_title']) && isset($_POST['exp_level']) && isset($_POST['rate']) &&
+				isset($_POST['amount']) && isset($_POST['amount']) && isset($_POST['techs']) && isset($_POST['location'])
+				&& $_POST['rate']!='Choose option' && $_POST['exp_level']!='Choose option'){
 				
-				$con = connect();
-				
-				if ($con){
+				if($_POST['submit_button']=='Create'){
+					uploadListing($data, "Create");
+				}elseif ($_POST['submit_button']=='Update' && isset($_POST['listingID'])){
 					
-					$con->autocommit(false);
+					$oldData=loadListingData($_POST['listingID']);
 					
-					$id_results=array();
-					
-					session_start();
-					//find user id
-					$stmt = $con->prepare("SELECT `id` FROM `users` WHERE `username`=?");
-					$stmt->bind_param("s", $_SESSION['username']);
-					//echo "username ".$_SESSION['username']."<br>";
-					$stmt->execute();
-					$stmt->bind_result($text);
-					$stmt->fetch();
-					array_push($id_results, $text);
-					$stmt->free_result();
-					
-					//get id for job level
-					$stmt = $con->prepare("SELECT `id` FROM `exp_levels` WHERE `exp_level`=?");
-					$stmt->bind_param("s", $_POST['exp_level']);
-					$stmt->execute();
-					$stmt->bind_result($text);
-					$stmt->fetch();
-					array_push($id_results, $text);
-					$stmt->free_result();
-					
-					//get id for payment rate
-					$stmt = $con->prepare("SELECT `id` FROM `payment_rates` WHERE `rate`=?");
-					$stmt->bind_param("s", $_POST['rate']);
-					$stmt->execute();
-					$stmt->bind_result($text);
-					$stmt->fetch();
-					array_push($id_results, $text);
-					$stmt->free_result();
-					
-					$stmt = $con->prepare("INSERT INTO
-    					listings (userID, job_title, job_level, payment_amount, payment_rate, techs, location, description)
-						VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-					$stmt->bind_param("isidisss", $id_results[0], $jobTitle, $id_results[1], $amount, $id_results[2], $techs, $location, $description);
-					
-					$stmt->execute();
-					
-					$con->commit();
-					$con->autocommit(true);
-					
-					$stmt->close();
-					$con->close();
-					
-					header("Location: pages-user-listings-history.php");
-					exit();
+					if($data['job_title']==$oldData['job_title'] && $data['exp_level']==$oldData['job_level'] &&
+						$data['amount']==$oldData['payment_amount'] && $data['rate']==$oldData['payment_rate'] &&
+						$data['techs']==$oldData['techs'] && $data['location']==$oldData['location'] &&
+						$data['description']==$oldData['description']){
+						echo "nothing changed";
+					}else{
+						$data['id']=$_POST['listingID'];
+						uploadListing($data, "Update");
+					}
 					
 				}
 				

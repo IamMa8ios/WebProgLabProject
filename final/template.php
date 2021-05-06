@@ -13,8 +13,8 @@
 
 <div class="container body">
     <div class="main_container">
-
-
+		
+		
 		<?php include("navigation-sidebar.php"); ?>
 		<?php include("navigation-top-user.php"); ?>
 
@@ -25,7 +25,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <?php include_once "navigation-footer.php"; ?>
+		<?php include_once "navigation-footer.php"; ?>
         <!-- /footer content -->
     </div>
 </div>

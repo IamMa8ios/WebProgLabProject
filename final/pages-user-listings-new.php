@@ -97,7 +97,7 @@
                 <div class="form-group">
                     <div class="col-md-9 col-sm-9  offset-md-3">
                         <button type="reset" class="btn btn-primary">Reset</button>
-                        <button type="submit" name="submit_button" value="freelancer_listing"
+                        <button type="submit" name="submit_button" value="Create"
                                 class="btn btn-success">Submit
                         </button>
                     </div>
