@@ -4,11 +4,14 @@
 	require_once "data-loader.php";
 	require_once "scripts.php";
 	
+	sessionCheck();
+	
 	if (isset($_POST)) {//check if data was given
 		
 		if (isset($_POST['submit_button'])) {
 			
-			if($_POST['submit_button']=='Update'){
+			if($_POST['submit_button']=='Update' || $_POST['submit_button']=='Create'){
+				
 				$data['job_title'] = $_POST['job_title'];
 				$data['exp_level'] = $_POST['exp_level'];
 				$data['amount']= $_POST['amount'];
@@ -17,10 +20,10 @@
 				$data['location'] = $_POST['location'];
 				$data['description'] = $_POST['description'];
 				
-				echo "<br>";
-				echo "<pre>";
-				print_r($data);
-				echo "</pre>";
+//				echo "<br>";
+//				echo "<pre>";
+//				print_r($data);
+//				echo "</pre>";
 				
 				if (isset($_POST['job_title']) && isset($_POST['exp_level']) && isset($_POST['rate']) &&
 					isset($_POST['amount']) && isset($_POST['amount']) && isset($_POST['techs']) && isset($_POST['location'])
@@ -53,8 +56,7 @@
 			
 		}elseif (isset($_POST['applyButton'])){
 			applyToListing($_POST['applyButton'], $_SESSION['id']);
-			echo "applied";
-			return;
+			header("Location: index.php");
 		}
 		
 	}

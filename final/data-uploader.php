@@ -21,6 +21,8 @@
 	
 	function uploadListing($data, $action)
 	{
+		
+		
 		sessionCheck();
 		
 		$con = connect();
@@ -163,7 +165,7 @@
 					
 					if (isset($results[0]['exists']) && $results[0]['exists'] == 1) {
 						$sql = "UPDATE `profiles`
-								SET `name`=?, `birthday`=?, `phone`=?, `country`=?, `email`=?, `job`=?, `website`=?, `last_update`=CURRENT_TIMESTAMP()
+								SET `photo`=?, `name`=?, `birthday`=?, `phone`=?, `country`=?, `email`=?, `job`=?, `website`=?, `last_update`=CURRENT_TIMESTAMP()
 								WHERE `userID`=?";
 						$stmt = getStatement($mysqli, $sql);
 						
@@ -173,7 +175,7 @@
 							
 							$phone = preg_replace('/[^0-9.]+/', '', $data['phone']);
 							
-							$stmt->bind_param("ssissssi", $data['name'], $birthday, $phone, $data['country'], $data['email'], $data['job'], $data['website'], $_SESSION['id']);
+							$stmt->bind_param("sssissssi", $_FILES["photo"]["name"], $data['name'], $birthday, $phone, $data['country'], $data['email'], $data['job'], $data['website'], $_SESSION['id']);
 							
 							if (executeUpdate($stmt)) {
 								saveProfilePhoto($data);
@@ -183,16 +185,16 @@
 						
 					} elseif ((isset($results[0]['exists']) && $results[0]['exists'] == 0)) {
 						
-						$sql = "INSERT INTO `profiles`(`userID`, `name`, `birthday`, `phone`, `country`, `email`, `job`, `website`)
-								VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+						$sql = "INSERT INTO `profiles`(`photo`, `userID`, `name`, `birthday`, `phone`, `country`, `email`, `job`, `website`)
+								VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 						$stmt = getStatement($mysqli, $sql);
 						
 						if ($stmt) {
 							
-							$stmt->bind_param("ississss", $_SESSION['id'], $data['name'], $data['birthday'], $data['phone'], $data['country'], $data['email'], $data['job'], $data['website']);
+							$stmt->bind_param("sississss", $_FILES["photo"]["name"], $_SESSION['id'], $data['name'], $data['birthday'], $data['phone'], $data['country'], $data['email'], $data['job'], $data['website']);
 							
 							if (executeUpdate($stmt)) {
-								saveProfilePhoto();
+								saveProfilePhoto($data);
 							}
 							
 						}
@@ -312,16 +314,23 @@
 								exit();
 							} else {
 								disconnect($mysqli);
-								echo "no upload";
+								header("Location: 500.php");
+								exit();
 							}
 							
 						} else {
-							echo "statement failed";
+							disconnect($mysqli);
+							header("Location: 500.php");
+							exit();
 						}
 						
 					}
 					
 					
+				}else{
+					disconnect($mysqli);
+					header("Location: 500.php");
+					exit();
 				}
 				
 			}

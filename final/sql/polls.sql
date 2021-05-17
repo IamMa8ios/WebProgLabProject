@@ -14,5 +14,5 @@ CREATE TABLE poll_options
     pollID INT NOT NULL,
     value   VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (pollID) REFERENCES polls (id)
-)
+    FOREIGN KEY (pollID) REFERENCES polls (id) ON UPDATE CASCADE ON DELETE CASCADE
+);

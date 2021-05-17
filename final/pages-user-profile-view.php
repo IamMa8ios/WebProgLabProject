@@ -3,6 +3,7 @@
 	require_once "data-loader.php";
 	sessionCheck();
 	
+	$photo = "user.png";
 	$name = "";
 	$birthday = "";
 	$phone = "";
@@ -14,6 +15,8 @@
 	$profile = loadProfile($_SESSION['id']);
 	
 	if ($profile) {
+		if($profile['photo']!="")
+			$photo = $profile['photo'];
 		$name = $profile['name'];
 		$birthday = date('d/m/Y', strtotime($profile['birthday']));
 		$phone = "+" . $profile['phone'];
@@ -81,8 +84,8 @@
                                 <div class="profile_img">
                                     <div id="crop-avatar">
                                         <!-- Current avatar -->
-                                        <img class="img-responsive avatar-view" src="images/picture.jpg"
-                                             alt="Avatar" title="Change the avatar">
+                                        <img class="img-responsive avatar-view" src="profile-photos/<?php echo $photo; ?>"
+                                             alt="Avatar" title="Change the avatar" style="max-height: 300px; max-width: 300px;">
                                     </div>
                                 </div>
                                 <h3><?php echo $name; ?></h3>

@@ -3,6 +3,7 @@
 	require_once "data-loader.php";
 	sessionCheck();
 	
+	$photo = "";
 	$name = "";
 	$birthday = "";
 	$phone = "";
@@ -14,6 +15,7 @@
 	$profile = loadProfile($_SESSION['id']);
 	
 	if ($profile) {
+	    $photo = $profile['photo'];
 		$name = $profile['name'];
 		$birthday = date('d/m/Y', strtotime($profile['birthday']));
 		$phone = "+" . $profile['phone'];

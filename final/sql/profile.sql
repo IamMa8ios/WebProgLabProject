@@ -10,7 +10,7 @@ CREATE TABLE `profiles`(
                            website VARCHAR(50),
                            PRIMARY KEY(id),
                            FOREIGN KEY(userID) REFERENCES users(id)
-)
+);
 
 CREATE TABLE skills(
                        id INT AUTO_INCREMENT,
@@ -24,5 +24,6 @@ CREATE TABLE skills(
                        skill4 VARCHAR(25),
                        value4 INT,
                        PRIMARY KEY(id),
-                       FOREIGN KEY(userID) REFERENCES users(id)
+                       FOREIGN KEY(userID) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+                       UNIQUE (userID)
 )
