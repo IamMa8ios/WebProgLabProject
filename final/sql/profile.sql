@@ -1,16 +1,28 @@
 CREATE TABLE `profiles`(
-                          id INT AUTO_INCREMENT,
-                          user_id INT NOT NULL UNIQUE,
-                          first_name VARCHAR(50),
-                          last_name VARCHAR(50),
-                          email VARCHAR(50),
-                          phone VARCHAR(15),
-                          gender VARCHAR(1),
-                          birthday DATE,
-                          PRIMARY KEY(id),
-                          FOREIGN KEY (user_id) REFERENCES users(id),
-                          FOREIGN KEY (email) REFERENCES users(email)
+                           id INT AUTO_INCREMENT,
+                           userID INT NOT NULL,
+                           name VARCHAR(50),
+                           birthday DATE,
+                           phone INT(12),
+                           country VARCHAR(50),
+                           email VARCHAR(50),
+                           job VARCHAR(50),
+                           website VARCHAR(50),
+                           PRIMARY KEY(id),
+                           FOREIGN KEY(userID) REFERENCES users(id)
 )
 
-INSERT INTO `profile` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `gender`, `birthday`)
-VALUES (NULL, '16', 'Freelancer', 'Active', NULL, '6941231231', 'M', '1998-11-13');
+CREATE TABLE skills(
+                       id INT AUTO_INCREMENT,
+                       userID INT NOT NULL,
+                       skill1 VARCHAR(25),
+                       value1 INT,
+                       skill2 VARCHAR(25),
+                       value2 INT,
+                       skill3 VARCHAR(25),
+                       value3 INT,
+                       skill4 VARCHAR(25),
+                       value4 INT,
+                       PRIMARY KEY(id),
+                       FOREIGN KEY(userID) REFERENCES users(id)
+)

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php require_once "navigation-head.php"; ?>
+    <?php require_once "navigation-head.php"; ?>
 </head>
 
 <body class="nav-md">
@@ -14,9 +14,8 @@
 <div class="container body">
     <div class="main_container">
 		
-		
-		<?php include("navigation-sidebar.php"); ?>
-		<?php include("navigation-top-user.php"); ?>
+		<?php require_once "navigation-sidebar.php"; ?>
+		<?php require_once "navigation-top-admin.php"; ?>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -25,7 +24,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
-		<?php include_once "navigation-footer.php"; ?>
+        <?php require_once "navigation-footer.php"; ?>
         <!-- /footer content -->
     </div>
 </div>
