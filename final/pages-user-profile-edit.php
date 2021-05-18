@@ -124,7 +124,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">User ID</label>
                                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                                    <input name="userID" type="text" class="form-control" value="<?php echo $userID; ?>">
+                                                    <input name="userID" type="text" class="form-control" value="<?php echo $userID; ?>" readonly="readonly">
                                                     <span class="fa fa-credit-card form-control-feedback right" aria-hidden="true"></span>
                                                 </div>
                                             </div>
