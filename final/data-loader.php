@@ -871,6 +871,36 @@
 		
 		return 0;
 	}
+	
+	function loadSettings($userID){
+	    
+	    if(isset($userID)){
+	        
+	        $mysqli=connect();
+	        
+	        if($mysqli){
+	            
+	            $sql="SELECT `username`, `email` FROM `users` WHERE `id`=?";
+	            
+	            $stmt=getStatement($mysqli, $sql);
+	            
+	            if($stmt){
+	                
+	                $stmt->bind_param("i", $userID);
+	                
+	                $results=fetchResults($stmt);
+	                
+	                disconnect($mysqli);
+	                
+	                return $results[0];
+	                
+                }
+		
+				disconnect($mysqli);
+			}
+        }
+	    return null;
+    }
 
 ?>
 

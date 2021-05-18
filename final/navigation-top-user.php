@@ -13,7 +13,7 @@
                     <div class="dropdown-menu dropdown-usermenu pull-right"
                           aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="pages-user-profile-view.php"> Profile</a>
-                        <a class="dropdown-item" href="javascript:;">
+                        <a class="dropdown-item" href="settings.php">
                             <span>Settings</span>
                         </a>
                         <a class="dropdown-item" href="javascript:;">Help</a>

@@ -325,7 +325,7 @@
 					}
 					
 					
-				}else{
+				} else {
 					disconnect($mysqli);
 					header("Location: 500.php");
 					exit();
@@ -379,8 +379,9 @@
 		
 	}
 	
-	function insertPoll($data){
-		if ($con = connect()){
+	function insertPoll($data)
+	{
+		if ($con = connect()) {
 			$con->autocommit(false);
 			
 			$sql = "INSERT INTO polls (title) VALUES (?) ";
@@ -395,8 +396,9 @@
 		
 	}
 	
-	function insertPollChoices($dataTitle, $dataOptions){
-		if ($con = connect()){
+	function insertPollChoices($dataTitle, $dataOptions)
+	{
+		if ($con = connect()) {
 			$con->autocommit(false);
 			// find id
 			$sql = "SELECT id FROM polls WHERE title= ?";
@@ -417,6 +419,64 @@
 			disconnect($con);
 			
 		}
+	}
+	
+	function updateSettings($data)
+	{
+		
+		if (isset($data)) {
+			
+			require_once "scripts.php";
+			
+			$mysqli = connect();
+			
+			if ($mysqli) {
+				
+				if (isset($data['username']) && isset($data['email']) && $data['username'] != "" && $data['email'] != "") {
+					
+					
+					$sql = "UPDATE `users` SET `username`=?, `email`=?, `last_update`=CURRENT_TIMESTAMP() WHERE `id`=?";
+					
+					$stmt = getStatement($mysqli, $sql);
+					
+					if ($stmt) {
+						
+						$stmt->bind_param("ssi", $data['username'], $data['email'], $data['userID']);
+						
+						$mysqli->autocommit(false);
+						executeUpdate($stmt);
+						$mysqli->autocommit(true);
+						
+					}
+				}
+				
+				
+			}
+			
+		}
+		
+		if (isset($data['password']) && $data['password']!="") {
+			
+			if ($mysqli) {
+				
+				$sql = "UPDATE `users` SET `pass`=?, `last_update`=CURRENT_TIMESTAMP() WHERE `id`=?";
+				
+				$stmt = getStatement($mysqli, $sql);
+				
+				if ($stmt) {
+					
+					$stmt->bind_param("si", $data['password'], $data['userID']);
+					
+					$mysqli->autocommit(false);
+					executeUpdate($stmt);
+					$mysqli->autocommit(true);
+					
+				}
+				
+			}
+			
+		}
+		
 	}
 
 ?>
