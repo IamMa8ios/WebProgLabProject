@@ -119,6 +119,7 @@
 	<meta charset="UTF-8">
 	<title>Login</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="myStyles.css">
 	<style>
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
@@ -147,7 +148,7 @@
 			<span class="invalid-feedback"><?php echo $password_err; ?></span>
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Login">
+			<input type="submit" class="btn-view" value="Login">
 		</div>
 		<p>Don't have an account? <a href="authentication-register.php">Sign up now</a>.</p>
 	</form>

@@ -47,7 +47,7 @@ if (isset($_POST)) {
                             <?php loadPollOptions($pollID) ?>
                             <form method="post" action="upload-poll-options.php">
                                 <button type="submit" name="delete_poll" value="<?php echo $pollID ?>"
-                                        class="btn btn-danger">
+                                        class="btn-negative">
                                     <span class="glyphicon glyphicon-trash"></span> Delete Poll
                                 </button>
                             </form>

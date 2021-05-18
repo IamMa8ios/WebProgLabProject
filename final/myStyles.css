@@ -1,6 +1,7 @@
 :root{
     --primary-blue-lower-opacity: #2A3F5490;
     --primary-blue: #2A3F54;
+
 }
 .myButton1 { /* CUSTOM */
     background: var(--primary-blue);
@@ -45,18 +46,108 @@
     overflow: hidden;
 }
 
-#yo {
+#cardBlue {
     background-image: linear-gradient(-90deg, var(--primary-blue), var(--primary-blue-lower-opacity));
 }
 
-#yo input{
+#cardBlue input{
     background: #2A3F5460;
     color: white;
     border: 2px solid var(--primary-blue-lower-opacity);
     border-radius: .2rem;
 }
 
-#yo input::placeholder{
+#cardBlue input::placeholder{
     color: white;
     font-size: 18px;
+}
+
+.btn-view {
+    background: #3498db;
+    background-image: linear-gradient(180deg, #3498db, #2980b9);
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+    text-shadow: 1px 1px 3px #666666;
+    -webkit-box-shadow: 0px 1px 3px #666666;
+    -moz-box-shadow: 0px 1px 3px #666666;
+    box-shadow: 0px 1px 3px #666666;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: solid #1f628d 2px;
+    text-decoration: none;
+}
+
+.btn-view:hover {
+    background: #3cb0fd;
+    background-image: linear-gradient(180deg, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.btn-negative {
+    background-image: linear-gradient(180deg, rgb(224, 64, 64), #d42525);
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+    text-shadow: 1px 1px 3px #666666;
+    -webkit-box-shadow: 0px 1px 3px #666666;
+    -moz-box-shadow: 0px 1px 3px #666666;
+    box-shadow: 0px 1px 3px #666666;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: solid #631d1d 2px;
+    text-decoration: none;
+}
+
+.btn-negative:hover {
+    background-image: linear-gradient(180deg, rgb(255, 100, 86), #ff4736);
+    text-decoration: none;
+}
+
+.btn-positive {
+    background-image: linear-gradient(180deg, rgb(11, 215, 73), rgb(2, 167, 50));
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+    text-shadow: 1px 1px 3px #666666;
+    -webkit-box-shadow: 0px 1px 3px #666666;
+    -moz-box-shadow: 0px 1px 3px #666666;
+    box-shadow: 0px 1px 3px #666666;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: solid rgb(7, 132, 45) 2px;
+    text-decoration: none;
+}
+
+.btn-positive:hover {
+    background-image: linear-gradient(180deg, rgb(28, 224, 88), rgb(2, 199, 59));
+    text-decoration: none;
+}
+
+.btn-gray {
+    background-image: linear-gradient(180deg, rgb(113, 113, 113), rgb(82, 82, 82));
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+    border-radius: 28px;
+    text-shadow: 1px 1px 3px #666666;
+    -webkit-box-shadow: 0px 1px 3px #666666;
+    -moz-box-shadow: 0px 1px 3px #666666;
+    box-shadow: 0px 1px 3px #666666;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: solid rgb(64, 64, 64) 2px;
+    text-decoration: none;
+}
+
+.btn-gray:hover {
+    background-image: linear-gradient(180deg, rgb(149, 149, 149), rgb(113, 113, 113));
+    text-decoration: none;
 }

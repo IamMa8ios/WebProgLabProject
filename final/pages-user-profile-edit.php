@@ -112,7 +112,7 @@
                                             <div class="form-group row">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-3">Profile Photo</label>
                                                 <div class="col-md-9 col-sm-9 col-xs-9">
-                                                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                                                    <label class="btn-view btn-upload" for="inputImage" title="Upload image file">
                                                         <input type="file" class="sr-only" id="inputImage" name="photo" accept="image/*">
                                                         <span class="docs-tooltip" data-toggle="tooltip" title="Upload">
                                                             <span class="fa fa-upload"></span>
@@ -190,11 +190,11 @@
 
                                             <div class="form-group">
                                                 <div class="col-md-9 col-sm-9 col-xs-9 btn-group">
-                                                    <button type="button" class="btn btn-secondary" href="pages-user-profile-view.php">Cancel</button>
+                                                    <button type="button" class="btn-gray" href="pages-user-profile-view.php">Cancel</button>
                                                 
-                                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                                    <button type="reset" class="btn-view">Reset</button>
                                                 
-                                                    <button name="save" type="submit" class="btn btn-success" value="profile">Save</button>
+                                                    <button name="save" type="submit" class="btn-positive" value="profile">Save</button>
                                                 </div>
                                             </div>
                                             
@@ -263,12 +263,12 @@
                                             <div class="ln_solid"></div>
                                             
                                             <div class="form-group">
-                                                <div class="col-md-9 col-sm-9 col-xs-9 btn-group">
-                                                    <button type="button" class="btn btn-secondary" href="pages-user-profile-view.php">Cancel</button>
+                                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                                    <button type="button" class="btn-gray" href="pages-user-profile-view.php">Cancel</button>
 
-                                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                                    <button type="reset" class="btn-view">Reset</button>
 
-                                                    <button name="save" type="submit" class="btn btn-success" value="skills">Save</button>
+                                                    <button name="save" type="submit" class="btn-positive" value="skills">Save</button>
                                                 </div>
                                             </div>
 

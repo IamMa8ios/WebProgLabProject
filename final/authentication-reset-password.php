@@ -97,7 +97,7 @@
 			<span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Submit">
+			<input type="submit" class="btn-view" value="Submit">
 			<a class="btn btn-link ml-2" href="welcome.php">Cancel</a>
 		</div>
 	</form>

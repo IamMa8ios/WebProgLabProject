@@ -165,7 +165,7 @@
 
                                     <!-- end of skills -->
 
-                                    <a class="btn btn-success" href="pages-user-profile-edit.php"><i
+                                    <a class="btn-view" href="pages-user-profile-edit.php"><i
                                                 class="fa fa-edit m-right-xs"></i>Edit Profile</a>
                                     <br/>
 

@@ -45,8 +45,8 @@ sessionCheck();
 
                             </div>
                             <div class="card-footer" id="yo">
-                                <button type="button" name="add" id="add" class="addButton">Add <span class="fa fa-plus-square"></button>
-                                <button type="submit" name="submit" id="submit" class="myButton1">Publish</button>
+                                <button type="button" name="add" id="add" class="btn-positive">Add <span class="fa fa-plus-square"></button>
+                                <button type="submit" name="submit" id="submit" class="btn-negative">Publish</button>
                             </div>
                         </form>
 
@@ -70,7 +70,7 @@ sessionCheck();
             i++;
             $('#dynamic_field').append('<tr id="row'+i+'">' +
                 '<td><input type="text" name="options[]" placeholder="Option Value" class="form-control name_list" required/></td>' +
-                '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">-</button></td></tr>');
+                '<td><button type="button" name="remove" id="'+i+'" class="btn-negative btn_remove">-</button></td></tr>');
         });
 
         $(document).on('click', '.btn_remove', function(){

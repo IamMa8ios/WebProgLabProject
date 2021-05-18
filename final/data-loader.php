@@ -48,17 +48,17 @@
                             <td class='last'>
                             <form action="pages-user-listings-manage.php" method="post">
                             <button type="submit" name="view_button" value="<?php echo $row['id']; ?>"
-                                    class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> View
+                                    class="btn-view"><span class="glyphicon glyphicon-eye-open"></span> View
                             </button>
 							<?php if ($_SESSION['role'] == $owner || ($_SESSION['role'] == 'Admin' && $owner == 'Admin')) { ?>
 								<?php if ($row['status'] == 'Open') { ?>
                                     <button type="submit" name="disable_button" value="<?php echo $row['id']; ?>"
-                                            class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>
+                                            class="btn-negative"><span class="glyphicon glyphicon-remove"></span>
                                         Disable
                                     </button>
 								<?php } elseif ($row['status'] == 'Closed') { ?>
                                     <button type="submit" name="enable_button" value="<?php echo $row['id']; ?>"
-                                            class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Enable
+                                            class="btn-positive"><span class="glyphicon glyphicon-ok"></span> Enable
                                     </button>
 								<?php } ?>
                                 </form>
@@ -390,6 +390,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
             </tr>
 			<?php
 		}
@@ -481,16 +482,16 @@
                                 <td>
                                     <form method="post" action="pages-admin-view-poll.php">
                                         <button type="submit" name="view_poll" value="<?php echo $row['id'] ?>"
-                                                class="btn btn-primary">
+                                                class="btn-view">
                                             <span class="glyphicon glyphicon-eye-open"></span> View
                                         </button>
 										<?php if ($row['status'] == 'Closed') { ?>
                                             <button type="submit" name="delete_poll" value="<?php echo $row['id'] ?>"
-                                                    class="btn btn-danger">
+                                                    class="btn-negative">
                                                 <span class="glyphicon glyphicon-trash"></span> Delete
                                             </button>
                                             <button type="submit" name="open_poll" value="<?php echo $row['id'] ?>"
-                                                    class="btn btn-success">
+                                                    class="btn-positive">
                                                 <span class="glyphicon glyphicon-ok"></span> Open
                                             </button>
 										<?php } ?>
@@ -588,20 +589,20 @@
                             <td>
                             <form method="post" action="upload-poll-options.php">
                             <button type="submit" name="view_poll" value="<?php echo $row['id'] ?>"
-                                    class="btn btn-primary">
+                                    class="btn-view">
                                 <span class="glyphicon glyphicon-eye-open"></span> View
                             </button>
 							
 							
 							<?php if ($row['status'] == 'Closed') { ?>
                                 <button type="submit" name="open_poll" value="<?php echo $row['id'] ?>"
-                                        class="btn btn-success">
+                                        class="btn-positive">
                                     <span class="glyphicon glyphicon-ok"></span> Re-Open
                                 </button>
 							
 							<?php } elseif ($row['status'] == 'Open') { ?>
                                 <button type="submit" name="close_poll" value="<?php echo $row['id'] ?>"
-                                        class="btn btn-danger">
+                                        class="btn-negative">
                                     <span class="glyphicon glyphicon-remove"></span> Close
                                 </button>
                                 </form>
@@ -696,7 +697,7 @@
 					displayApplications($results);
 					
 				} else {
-					header("Location 500.php");
+					header("Location: 500.php");
 					exit();
 				}
 				disconnect($mysqli);
@@ -767,7 +768,7 @@
 					return $results;
 					
 				} else {
-					header("Location 500.php");
+					header("Location: 500.php");
 					exit();
 				}
 			}

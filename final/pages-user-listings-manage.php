@@ -122,9 +122,9 @@
                     <div class="col-md-9 col-sm-9  offset-md-3">
                         <?php if($data['userID']==$_SESSION['id'] || $_SESSION['role']=='Admin'){ ?>
                         <input id="editButton" class="btn btn-dark" type="button" name='edit' value='Edit'>
-                        <input id="saveButton" class="btn btn-success" type="submit" name='submit_button' value='Update' hidden="hidden">
+                        <input id="saveButton" class="btn-positive" type="submit" name='submit_button' value='Update' hidden="hidden">
                         <?php }else{ ?>
-                            <button type="submit" name="applyButton" value="<?php echo $_POST['view_button']; ?>" class="btn btn-success">Apply</button>
+                            <button type="submit" name="applyButton" value="<?php echo $_POST['view_button']; ?>" class="btn-positive">Apply</button>
                         <?php } ?>
                     </div>
                 </div>

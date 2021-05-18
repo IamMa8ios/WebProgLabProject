@@ -96,9 +96,9 @@
                 <div class="ln_solid"></div>
                 <div class="form-group">
                     <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="reset" class="btn-gray">Reset</button>
                         <button type="submit" name="submit_button" value="Create"
-                                class="btn btn-success">Submit
+                                class="btn-positive">Submit
                         </button>
                     </div>
                 </div>
