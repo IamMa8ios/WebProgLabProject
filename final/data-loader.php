@@ -299,7 +299,7 @@
 			
 			if ($stmt) {
 				
-				$stmt->bind_param("i", $_SESSION['id']);
+				$stmt->bind_param("i", $userID);
 				
 				$result = fetchResults($stmt);
 				
@@ -371,6 +371,12 @@
                     <td><?php echo $user['registration_date'] ?></td>
                     <td>
 						<?php loadUserButtons($user['id'], $status); ?>
+                    </td>
+                    <td>
+                        <form method="post" action="pages-user-profile-edit.php">
+                            <button type="submit" name="manage_button" value="<?php echo $user['id']; ?> " class="btn fa fa-edit" title="Edit Profile" data-placement="auto" data-toggle="tooltip">
+                            </button>
+                        </form>
                     </td>
                 </tr>
 				<?php

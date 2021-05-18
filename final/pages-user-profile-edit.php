@@ -1,7 +1,14 @@
 <?php
 	require_once "scripts.php";
 	require_once "data-loader.php";
-	sessionCheck();
+	
+	$userID=$_SESSION['id'];
+	
+	if(!isset($_POST['manage_button'])){
+		sessionCheck();
+	}else{
+	    $userID=$_POST['manage_button'];
+    }
 	
 	$photo = "";
 	$name = "";
@@ -12,7 +19,7 @@
 	$job = "";
 	$website = "";
 	
-	$profile = loadProfile($_SESSION['id']);
+	$profile = loadProfile($userID);
 	
 	if ($profile) {
 	    $photo = $profile['photo'];
@@ -35,7 +42,7 @@
 	$skill4 = "Skill 4";
 	$value4 = 50;
 	
-	$skills = loadSkills($_SESSION['id']);
+	$skills = loadSkills($userID);
 	
 	if ($skills) {
 		$skill1 = $skills['skill1'];
@@ -112,7 +119,14 @@
                                                         </span>
                                                     </label>
                                                 </div>
-                                                
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-3">User ID</label>
+                                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                                    <input name="userID" type="text" class="form-control" value="<?php echo $userID; ?>">
+                                                    <span class="fa fa-credit-card form-control-feedback right" aria-hidden="true"></span>
+                                                </div>
                                             </div>
                                             
                                             <div class="form-group row">

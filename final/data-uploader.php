@@ -146,8 +146,6 @@
 	{
 		if (isset($data) && isset($_FILES)) {
 			
-			print_r($data);
-			
 			$mysqli = connect();
 			
 			//name] => [birthday] => [phone] => [country] => [email] => [job] => [website
@@ -160,7 +158,7 @@
 				
 				if ($stmt) {
 					
-					$stmt->bind_param("i", $_SESSION['id']);
+					$stmt->bind_param("i", $data['userID']);
 					$results = fetchResults($stmt);
 					
 					if (isset($results[0]['exists']) && $results[0]['exists'] == 1) {
@@ -175,7 +173,7 @@
 							
 							$phone = preg_replace('/[^0-9.]+/', '', $data['phone']);
 							
-							$stmt->bind_param("sssissssi", $_FILES["photo"]["name"], $data['name'], $birthday, $phone, $data['country'], $data['email'], $data['job'], $data['website'], $_SESSION['id']);
+							$stmt->bind_param("sssissssi", $_FILES["photo"]["name"], $data['name'], $birthday, $phone, $data['country'], $data['email'], $data['job'], $data['website'], $data['userID']);
 							
 							if (executeUpdate($stmt)) {
 								saveProfilePhoto($data);
@@ -191,7 +189,7 @@
 						
 						if ($stmt) {
 							
-							$stmt->bind_param("sississss", $_FILES["photo"]["name"], $_SESSION['id'], $data['name'], $data['birthday'], $data['phone'], $data['country'], $data['email'], $data['job'], $data['website']);
+							$stmt->bind_param("sississss", $_FILES["photo"]["name"], $data['userID'], $data['name'], $data['birthday'], $data['phone'], $data['country'], $data['email'], $data['job'], $data['website']);
 							
 							if (executeUpdate($stmt)) {
 								saveProfilePhoto($data);
@@ -279,7 +277,7 @@
 				
 				if ($stmt) {
 					
-					$stmt->bind_param("i", $_SESSION['id']);
+					$stmt->bind_param("i", $data['userID']);
 					
 					$results = fetchResults($stmt);
 					
@@ -303,9 +301,9 @@
 						if ($stmt) {
 							
 							if ($action == "insert") {
-								$stmt->bind_param("isisisisi", $_SESSION['id'], $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4']);
+								$stmt->bind_param("isisisisi", $data['udsrID'], $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4']);
 							} elseif ($action == "update") {
-								$stmt->bind_param("sisisisii", $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4'], $_SESSION['id']);
+								$stmt->bind_param("sisisisii", $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4'], $data['userID']);
 							}
 							
 							if (executeUpdate($stmt)) {
