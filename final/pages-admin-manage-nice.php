@@ -49,7 +49,7 @@
                                                 <th class="column-title">Desired Role</th>
                                                 <th class="column-title">Account Registered</th>
                                                 <th class="column-title no-link last"><span class="nobr">Action</span>
-                                                <th class="column-title no-link last"><span class="nobr">Manage Profile</span>
+                                                <th class="column-title no-link last"><span class="nobr">Manage</span>
                                                 </th>
                                                 <th class="bulk-actions" colspan="8">
                                                     <a class="antoo" style="color:#fff; font-weight:500;">Select All ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>

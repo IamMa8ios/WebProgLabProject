@@ -374,8 +374,10 @@
                     </td>
                     <td>
                         <form method="post" action="pages-user-profile-edit.php">
-                            <button type="submit" name="manage_button" value="<?php echo $user['id']; ?> " class="btn fa fa-edit" title="Edit Profile" data-placement="auto" data-toggle="tooltip">
-                            </button>
+                            <button type="submit" name="manage_button" value="<?php echo $user['id']; ?> " class="btn fa fa-edit" title="Edit Profile" data-placement="auto" data-toggle="tooltip"></button>
+                        </form>
+                        <form method="post" action="settings.php">
+                            <button type="submit" name="manage_settings" value="<?php echo $user['id']; ?> " class="btn fa fa-edit" title="Edit Settings" data-placement="auto" data-toggle="tooltip"></button>
                         </form>
                     </td>
                 </tr>

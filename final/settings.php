@@ -1,9 +1,14 @@
 <?php
 	require_once "scripts.php";
 	require_once "data-loader.php";
-	sessionCheck();
 	
+	sessionCheck();
 	$userID=$_SESSION['id'];
+	
+	if (isset($_POST) && isset($_POST['manage_settings'])){
+		$userID=$_POST['manage_settings'];
+	}
+	
 	$username = "";
 	$email = "";
 	

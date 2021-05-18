@@ -444,7 +444,10 @@
 						$stmt->bind_param("ssi", $data['username'], $data['email'], $data['userID']);
 						
 						$mysqli->autocommit(false);
-						executeUpdate($stmt);
+						if(!executeUpdate($stmt)){
+							echo "failed update";
+							return;
+						}
 						$mysqli->autocommit(true);
 						
 					}
