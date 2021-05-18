@@ -632,7 +632,7 @@
 			
 			if ($mysqli) {
 				
-				$sql = "SELECT `a`.`id` AS `application id`, `u`.`username` AS `poster`, `l`.`job_title` AS `job`, `a`.`application_date` AS `date`
+				$sql = "SELECT `a`.`id` AS `application id`, `u`.`username` AS `user`, `l`.`job_title` AS `job`, `a`.`application_date` AS `date`
                         FROM `users` AS `u`, `applications` AS `a`, `listings` AS `l`
                         WHERE `u`.`id`=`a`.`posterID` AND `l`.`id`=`a`.`listingID`";
 				
@@ -671,9 +671,9 @@
 			
 			if ($mysqli) {
 				
-				$sql = "SELECT `a`.`id` AS `application id`, `u`.`username` AS `poster`, `l`.`job_title` AS `job`, `a`.`application_date` AS `date`
+				$sql = "SELECT `a`.`id` AS `application id`, `u`.`username` AS `user`, `l`.`job_title` AS `job`, `a`.`application_date` AS `date`
                         FROM `users` AS `u`, `applications` AS `a`, `listings` AS `l`
-                        WHERE `u`.`id`=`a`.`posterID` AND `l`.`id`=`a`.`listingID`";
+                        WHERE `u`.`id`=`a`.`applicantID` AND `l`.`id`=`a`.`listingID`";
 				
 				if ($role != 'Admin') {
 					$sql = $sql . " AND `a`.`posterID`=?";
@@ -709,7 +709,7 @@
 
                 <tr>
                     <td> <?php echo $app['application id']; ?> </td>
-                    <td> <?php echo $app['poster']; ?> </td>
+                    <td> <?php echo $app['user']; ?> </td>
                     <td> <?php echo $app['job']; ?> </td>
                     <td> <?php echo $app['date']; ?> </td>
                 </tr>
@@ -784,7 +784,7 @@
                             <span><?php echo $not['username']; ?></span>
                         </span>
                         <span class="message">
-                            <?php echo $not['username']." applied for ".$not['job'] ?>
+                            <?php echo $not['username'] . " applied for " . $not['job'] ?>
                         </span>
                     </a>
                 </li>
@@ -795,6 +795,74 @@
             </li>
 		<?php }
 		
+	}
+	
+	function countListings($userID)
+	{
+		
+		if (isset($userID)) {
+			
+			$mysqli = connect();
+			
+			if ($mysqli) {
+				
+				$sql = "SELECT COUNT(`id`) AS `count` FROM `listings` WHERE `userID`=?";
+				
+				$stmt = getStatement($mysqli, $sql);
+				
+				if ($stmt) {
+					
+					$stmt->bind_param("i", $userID);
+					
+					$results = fetchResults($stmt);
+					
+					disconnect($mysqli);
+					
+					return $results[0]['count'];
+				}
+				
+			}
+			disconnect($mysqli);
+		}
+		return 0;
+	}
+	
+	function countApplications($userID, $owner)
+	{
+		
+		if (isset($userID) && isset($owner)) {
+			
+			$mysqli = connect();
+			
+			if ($mysqli) {
+				
+				$sql = "SELECT COUNT(`id`) AS `count` FROM `applications`";
+				
+				if ($owner == $_SESSION['role']) {
+				    $sql=$sql." WHERE `posterID`=?";
+				}else{
+				    $sql=$sql." WHERE `applicantID`=?";
+                }
+				
+				$stmt = getStatement($mysqli, $sql);
+				
+				if ($stmt) {
+					
+					$stmt->bind_param("i", $userID);
+					
+					$results = fetchResults($stmt);
+					
+					disconnect($mysqli);
+					
+					return $results[0]['count'];
+					
+				}
+				
+			}
+			disconnect($mysqli);
+		}
+		
+		return 0;
 	}
 
 ?>

@@ -51,22 +51,21 @@
                         <div class="flex">
                             <ul class="list-inline count2">
                                 <li>
-                                    <h3>123</h3>
+                                    <h3><?php echo countListings($_SESSION['id']); ?></h3>
                                     <span>Listed</span>
                                 </li>
                                 <li>
-                                    <h3>123</h3>
+                                    <h3><?php echo countApplications($_SESSION['id'], 'Freelancer'); ?></h3>
                                     <span>Applied</span>
                                 </li>
                                 <li>
-                                    <h3>123</h3>
-                                    <span>Applied</span>
+                                    <h3><?php echo countApplications($_SESSION['id'], $_SESSION['role']); ?></h3>
+                                    <span>Applied To Me</span>
                                 </li>
                             </ul>
                         </div>
                         <p>
-                            If you've decided to go in development mode and tweak all of this a bit, there are few
-                            things you should do.
+                            Here is a quick review about the activity involving you.
                         </p>
                     </div>
                 </div>
@@ -117,7 +116,7 @@
                                     <thead>
                                     <tr class="headings">
                                         <th class="column-title">Application ID</th>
-                                        <th class="column-title">Poster Name</th>
+                                        <th class="column-title">Applicant Name</th>
                                         <th class="column-title">Job Title</th>
                                         <th class="column-title">Date Applied</th>
                                     </tr>

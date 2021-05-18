@@ -20,10 +20,6 @@
 				$data['location'] = $_POST['location'];
 				$data['description'] = $_POST['description'];
 				
-//				echo "<br>";
-//				echo "<pre>";
-//				print_r($data);
-//				echo "</pre>";
 				
 				if (isset($_POST['job_title']) && isset($_POST['exp_level']) && isset($_POST['rate']) &&
 					isset($_POST['amount']) && isset($_POST['amount']) && isset($_POST['techs']) && isset($_POST['location'])
@@ -40,6 +36,7 @@
 							$data['techs']==$oldData['techs'] && $data['location']==$oldData['location'] &&
 							$data['description']==$oldData['description']){
 							echo "nothing changed";
+							header("Location: pages-user-listings-history.php");
 						}else{
 							$data['id']=$_POST['listingID'];
 							uploadListing($data, "Update");

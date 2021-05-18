@@ -348,11 +348,14 @@
 			
 			if ($mysqli) {
 				
-				$sql = "SELECT `u`.`id` AS `posterID` FROM `users` AS `u`, `listings` AS `l` WHERE `u`.`id`=`l`.`userID`";
+				$sql = "SELECT `u`.`id` AS `posterID` FROM `users` AS `u`, `listings` AS `l`
+						WHERE `u`.`id`=`l`.`userID` AND `l`.`id`=?";
 				
 				$stmt = getStatement($mysqli, $sql);
 				
 				if ($stmt) {
+					
+					$stmt->bind_param("i", $listingID);
 					
 					$results = fetchResults($stmt);
 					
