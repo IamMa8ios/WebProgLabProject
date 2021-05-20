@@ -9,6 +9,6 @@
 	
 	// destroy the session
 	session_destroy();
-	header("Location: authentication-login.php");
+	header("Location: index.php");
 	exit();
 ?>

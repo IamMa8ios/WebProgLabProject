@@ -1,25 +1,30 @@
 <?php
-    session_start();
-	if(!(isset($_SESSION['username']) && isset($_SESSION['role']) && isset($_SESSION['status']) && $_SESSION['status']=='Pending Confirmation')){
-	    header("Location: login.php");
+	require_once "scripts.php";
+	sessionCheck();
+	
+	if(iAmProfessor()==0){
+	    header("Location: index-inactive.php");
+	    exit();
+    }elseif (iAmProfessor()==-1){
+		header("Location: index.php");
 		exit();
     }
+	
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php require_once "navigation-head.php" ?>
+    <?php require_once "navigation-head.php" ?>
 </head>
 
-<body class="">
+<body class="nav-md">
 
 <div class="container body">
     <div class="main_container">
-
-        <!-- top navigation -->
-		<?php require_once "navigation-top-inactive.php"; ?>
-        <!-- /top navigation -->
+		
+		<?php require_once "navigation-sidebar.php"; ?>
+		<?php require_once "navigation-top-user.php"; ?>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -51,17 +56,30 @@
                         <h3 class="name"><?php echo $_SESSION['username']; ?></h3>
 
                         <div class="flex">
-                            <ul class="list-inline count2" style="font-size: large">
-                                <b>Pending Confirmation</b>
+                            <ul class="list-inline count2">
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Listed</span>
+                                </li>
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Applied</span>
+                                </li>
+                                <li>
+                                    <h3>123</h3>
+                                    <span>Applied</span>
+                                </li>
                             </ul>
                         </div>
                         <p>
-                            Your account must be verified by an admin before you can continue. An admin will soon review
-                            your application.
+                            If you've decided to go in development mode and tweak all of this a bit, there are few
+                            things you should do.
                         </p>
                     </div>
                 </div>
             </div>
+			
+			<?php //echo hash('sha3-256', 'test'); ?>
 
         </div>
         <!-- /page content -->

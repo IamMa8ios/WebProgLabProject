@@ -2,22 +2,19 @@
 
 	require_once "scripts.php";
 	require_once "data-uploader.php";
-	sessionCheck();
 	
-	if(isset($_POST) && isset($_POST['save'])){
-		
-		$data=$_POST;
+	if (isset($_POST)){
 		
 		if($_POST['save']=='profile'){
+			
+			$data=$_POST;
 			uploadProfile($data);
-		}elseif ($_POST['save']=='skills'){
-			uploadSkills($data);
+			unset($_POST);
 		}
 		
-	}else{
-		header("Location: 404.php");
-		exit();
 	}
-
+	
+	header("Location: pages-user-profile-view.php");
+	exit();
 
 ?>

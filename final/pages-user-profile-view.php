@@ -1,53 +1,41 @@
 <?php
 	require_once "scripts.php";
 	require_once "data-loader.php";
+	
 	sessionCheck();
 	
+	$userID=$_SESSION['id'];
 	$photo = "user.png";
-	$name = "";
-	$birthday = "";
+	$firstName = "";
+	$lastName = "";
 	$phone = "";
-	$country = "";
 	$email = "";
-	$job = "";
+	$rank = "";
 	$website = "";
 	
-	$profile = loadProfile($_SESSION['id']);
+	if(isset($_POST)){
+		
+		if(isset($_POST['userID']) && is_int($_POST['userID'] )){
+			$userID=$_POST['userID'];
+		}
+		
+	}
+	
+	$profile = loadProfile($userID);
+	
+	unset($_POST);
 	
 	if ($profile) {
 		if($profile['photo']!="")
 			$photo = $profile['photo'];
-		$name = $profile['name'];
-		$birthday = date('d/m/Y', strtotime($profile['birthday']));
-		$phone = "+" . $profile['phone'];
-		$phone = substr_replace($phone, "-", 3, 0);
-		$country = $profile['country'];
+		$firstName = $profile['first_name'];
+		$lastName = $profile['last_name'];
+		$phone = "+30 - " . $profile['phone'];
 		$email = $profile['email'];
-		$job = $profile['job'];
+		$rank = $profile['rank'];
 		$website = $profile['website'];
 	}
 	
-	$skill1 = "";
-	$value1 = 0;
-	$skill2 = "";
-	$value2 = 0;
-	$skill3 = "";
-	$value3 = 0;
-	$skill4 = "";
-	$value4 = 0;
-	
-	$skills = loadSkills($_SESSION['id']);
-	
-	if ($skills) {
-		$skill1 = $skills['skill1'];
-		$value1 = $skills['value1'];
-		$skill2 = $skills['skill2'];
-		$value2 = $skills['value2'];
-		$skill3 = $skills['skill3'];
-		$value3 = $skills['value3'];
-		$skill4 = $skills['skill4'];
-		$value4 = $skills['value4'];
-	}
 ?>
 
 <!DOCTYPE html>
@@ -88,20 +76,15 @@
                                              alt="Avatar" title="Change the avatar" style="max-height: 300px; max-width: 300px;">
                                     </div>
                                 </div>
-                                <h3><?php echo $name; ?></h3>
+                                <h3><?php echo $firstName . " ". $lastName; ?></h3>
 
                                 <ul class="list-unstyled user_data">
 
-                                    <li><i class="fa fa-birthday-cake user-profile-icon"></i> <?php echo $birthday; ?>
-                                    </li>
-
                                     <li><i class="fa fa-phone user-profile-icon"></i> <?php echo $phone; ?> </li>
-
-                                    <li><i class="fa fa-map-marker user-profile-icon"></i> <?php echo $country; ?></li>
 
                                     <li><i class="fa fa-envelope-o user-profile-icon"></i> <?php echo $email; ?></li>
 
-                                    <li><i class="fa fa-briefcase user-profile-icon"></i> <?php echo $job; ?> </li>
+                                    <li><i class="fa fa-star-o user-profile-icon"></i> <?php echo $rank; ?> </li>
 
                                     <li class="m-top-xs">
                                         <i class="fa fa-external-link user-profile-icon"></i>
@@ -112,56 +95,14 @@
                                 </ul>
 
                                 <!-- start skills -->
-                                <h4>Skills</h4>
+                                <h4></h4>
                                 <ul class="list-unstyled user_data">
 									
-									<?php if ($skill1 != "") { ?>
-
-                                        <li>
-                                            <p> <?php echo $skill1; ?> </p>
-                                            <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar"
-                                                     data-transitiongoal="<?php echo $value1; ?>"></div>
-                                            </div>
-                                        </li>
+									<?php
+                                        if (($_SESSION['role']!='2'))
+                                            echo loadProfileStats($userID);
+                                        ?>
 									
-									<?php } ?>
-									
-									<?php if ($skill2 != "") { ?>
-
-                                        <li>
-                                            <p> <?php echo $skill2; ?> </p>
-                                            <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar"
-                                                     data-transitiongoal="<?php echo $value2; ?>"></div>
-                                            </div>
-                                        </li>
-									
-									<?php } ?>
-									
-									<?php if ($skill3 != "") { ?>
-
-                                        <li>
-                                            <p> <?php echo $skill3; ?> </p>
-                                            <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar"
-                                                     data-transitiongoal="<?php echo $value3; ?>"></div>
-                                            </div>
-                                        </li>
-									
-									<?php } ?>
-									
-									<?php if ($skill4 != "") { ?>
-
-                                        <li>
-                                            <p> <?php echo $skill4; ?> </p>
-                                            <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar"
-                                                     data-transitiongoal="<?php echo $value4; ?>"></div>
-                                            </div>
-                                        </li>
-									
-									<?php } ?>
 
                                     <!-- end of skills -->
 

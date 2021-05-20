@@ -1,15 +1,14 @@
 <?php
 	
-	function logGuest()
-	{
-		$mysqli = connect();
+	function logGuest(){
+		$mysqli=connect();
 		
-		$sql = "INSERT INTO `guest_log`(`id`) VALUES(NULL);";
+		$sql="INSERT INTO `guest_logger`(`id`) VALUES(NULL);";
 		
-		if ($mysqli) {
-			$stmt = getStatement($mysqli, $sql);
+		if($mysqli){
+			$stmt=getStatement($mysqli, $sql);
 			
-			if ($stmt) {
+			if ($stmt){
 				$mysqli->autocommit(false);
 				executeUpdate($stmt);
 				$mysqli->commit();
@@ -19,136 +18,11 @@
 		disconnect($mysqli);
 	}
 	
-	function uploadListing($data, $action)
-	{
-		
-		
-		sessionCheck();
-		
-		$con = connect();
-		
-		if ($con) {
-			
-			$con->autocommit(false);
-			
-			$sql = "SELECT `id` FROM `payment_rates` WHERE `rate`=?";
-			$stmt = getStatement($con, $sql);
-			
-			if ($stmt) {
-				
-				$stmt->bind_param("s", $data['rate']);
-				$result = fetchResults($stmt);
-				
-				if (sizeof($result) == 1) {
-					
-					$rateID = $result[0]['id'];
-					$sql = "SELECT `id` FROM `exp_levels` WHERE `exp_level`=?";
-					$stmt = getStatement($con, $sql);
-					
-					if ($stmt) {
-						
-						$stmt->bind_param("s", $data['exp_level']);
-						$result = fetchResults($stmt);
-						
-						if (sizeof($result) == 1) {
-							
-							$expID = $result[0]['id'];
-							$amount = doubleval($data['amount']);
-							
-							if ($action == 'Create') {
-								$sql = "INSERT INTO `listings`(`userID`, `job_title`, `job_level`, `payment_amount`,
-                       					`payment_rate`, `techs`, `location`, `description`)
-										VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-								$stmt = getStatement($con, $sql);
-								$stmt->bind_param("isidisss", $_SESSION['id'], $data['job_title'], $expID,
-									$amount, $rateID, $data['techs'], $data['location'], $data['description']);
-							} elseif ($action == 'Update') {
-								$sql = "UPDATE `listings` SET `job_title`=?, `job_level`=?, `payment_amount`=?, `payment_rate`=?,
-                      					`techs`=?, `location`=?, `description`=?, `last_edit`=CURRENT_TIMESTAMP()
-										WHERE `userID`=? AND `id`=?;";
-								$stmt = getStatement($con, $sql);
-								$stmt->bind_param("sidisssii", $data['job_title'], $expID, $data['amount'], $rateID,
-									$data['techs'], $data['location'], $data['description'], $_SESSION['id'], $data['id']);
-							}
-							
-							executeUpdate($stmt);
-							
-						} else {
-							header("Location: 500.php");
-							exit();
-						}
-						
-					} else {
-						header("Location: 500.php");
-						exit();
-					}
-				} else {
-					header("Location: 500.php");
-					exit();
-				}
-				
-			} else {
-				header("Location: 500.php");
-				exit();
-			}
-			
-			$con->autocommit(true);
-			
-			disconnect($con);
-			
-			header("Location: pages-user-listings-history.php");
-			exit();
-			
-		}
-		
-	}
-	
-	function editListingStatus($action, $listingID)
-	{
-		
-		
-		if (isset($action) && isset($listingID)) {
-			
-			$status = "";
-			
-			if ($action == 'enable') {
-				$status = 'Open';
-			} elseif ($action == 'disable') {
-				$status = 'Closed';
-			} else {
-				return;
-			}
-			
-			$mysqli = connect();
-			
-			if ($mysqli) {
-				
-				$sql = "UPDATE `listings` SET `status`=?, `last_edit`=CURRENT_TIMESTAMP() WHERE `id`=?";
-				
-				$stmt = getStatement($mysqli, $sql);
-				
-				if ($stmt) {
-					$stmt->bind_param("si", $status, $listingID);
-					$mysqli->autocommit(false);
-					executeUpdate($stmt);
-					$mysqli->commit();
-					$mysqli->autocommit(true);
-				}
-			}
-			disconnect($mysqli);
-			
-		}
-		
-		
-	}
-	
 	function uploadProfile($data)
 	{
 		if (isset($data) && isset($_FILES)) {
 			
 			$mysqli = connect();
-			
-			//name] => [birthday] => [phone] => [country] => [email] => [job] => [website
 			
 			if ($mysqli) {
 				
@@ -161,45 +35,90 @@
 					$stmt->bind_param("i", $data['userID']);
 					$results = fetchResults($stmt);
 					
-					if (isset($results[0]['exists']) && $results[0]['exists'] == 1) {
-						$sql = "UPDATE `profiles`
-								SET `photo`=?, `name`=?, `birthday`=?, `phone`=?, `country`=?, `email`=?, `job`=?, `website`=?, `last_update`=CURRENT_TIMESTAMP()
+					$photo=$_FILES["photo"]["name"];
+					
+					if($photo){
+						
+						if (isset($results[0]['exists']) && $results[0]['exists'] == 1) {
+							$sql = "UPDATE `profiles`
+								SET `photo`=?, `first_name`=?, `last_name`=?, `phone`=?, `rank`=?, `email`=?, `website`=?, `last_edit`=CURRENT_TIMESTAMP()
 								WHERE `userID`=?";
-						$stmt = getStatement($mysqli, $sql);
-						
-						if ($stmt) {
+							$stmt = getStatement($mysqli, $sql);
 							
-							$birthday = date('Y/m/d', strtotime($data['birthday']));
-							
-							$phone = preg_replace('/[^0-9.]+/', '', $data['phone']);
-							
-							$stmt->bind_param("sssissssi", $_FILES["photo"]["name"], $data['name'], $birthday, $phone, $data['country'], $data['email'], $data['job'], $data['website'], $data['userID']);
-							
-							if (executeUpdate($stmt)) {
-								saveProfilePhoto($data);
+							if ($stmt) {
+								
+								$stmt->bind_param("sssssssi", $photo, $data['firstName'], $data['lastName'], $data['phone'], $data['rank'], $data['email'], $data['website'], $data['userID']);
+								
+								if (executeUpdate($stmt)) {
+									saveProfilePhoto($data);
+								}
+								
 							}
 							
-						}
-						
-					} elseif ((isset($results[0]['exists']) && $results[0]['exists'] == 0)) {
-						
-						$sql = "INSERT INTO `profiles`(`photo`, `userID`, `name`, `birthday`, `phone`, `country`, `email`, `job`, `website`)
-								VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-						$stmt = getStatement($mysqli, $sql);
-						
-						if ($stmt) {
+						} elseif ((isset($results[0]['exists']) && $results[0]['exists'] == 0)) {
 							
-							$stmt->bind_param("sississss", $_FILES["photo"]["name"], $data['userID'], $data['name'], $data['birthday'], $data['phone'], $data['country'], $data['email'], $data['job'], $data['website']);
+							$sql = "INSERT INTO `profiles`(`photo`, `userID`, `first_name`, `last_name`, `phone`, `rank`, `email`, `website`)
+								VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+							$stmt = getStatement($mysqli, $sql);
 							
-							if (executeUpdate($stmt)) {
-								saveProfilePhoto($data);
+							if ($stmt) {
+								
+								$stmt->bind_param("sissssss", $photo, $data['userID'], $data['firstName'], $data['lastName'], $data['phone'], $data['rank'], $data['email'], $data['website']);
+								
+								if (executeUpdate($stmt)) {
+									saveProfilePhoto($data);
+								}else{
+									displayError("Error while uploading profile.");
+								}
+								
 							}
 							
+						} else {
+							displayError("Error while loading profile.");
+							exit();
 						}
 						
-					} else {
-						header("Location: 404.php");
-						exit();
+					}else{
+						
+						if (isset($results[0]['exists']) && $results[0]['exists'] == 1) {
+							$sql = "UPDATE `profiles`
+								SET `first_name`=?, `last_name`=?, `phone`=?, `rank`=?, `email`=?, `website`=?, `last_edit`=CURRENT_TIMESTAMP()
+								WHERE `userID`=?";
+							$stmt = getStatement($mysqli, $sql);
+							
+							if ($stmt) {
+								
+								$stmt->bind_param("ssssssi", $data['firstName'], $data['lastName'], $data['phone'], $data['rank'], $data['email'], $data['website'], $data['userID']);
+								
+								if (executeUpdate($stmt)) {
+									saveProfilePhoto($data);
+								}
+								
+							}
+							
+						} elseif ((isset($results[0]['exists']) && $results[0]['exists'] == 0)) {
+							
+							$sql = "INSERT INTO `profiles`(`userID`, `first_name`, `last_name`, `phone`, `rank`, `email`, `website`)
+								VALUES(?, ?, ?, ?, ?, ?, ?)";
+							$stmt = getStatement($mysqli, $sql);
+							
+							if ($stmt) {
+								
+								$stmt->bind_param("issssss", $data['userID'], $data['firstName'], $data['lastName'], $data['phone'], $data['rank'], $data['email'], $data['website']);
+								
+								if (executeUpdate($stmt)) {
+									saveProfilePhoto($data);
+								}else{
+									displayError("Error while uploading profile.");
+								}
+								
+							}
+							
+						} else {
+							header("Location: 404.php");
+							exit();
+						}
+						
 					}
 					
 					
@@ -262,224 +181,4 @@
 		return $uploadOk;
 	}
 	
-	function uploadSkills($data)
-	{
-		
-		if (isset($data)) {
-			
-			$mysqli = connect();
-			
-			if ($mysqli) {
-				
-				$sql = "SELECT COUNT(`id`) AS `numOfSkillsets` FROM `skills` WHERE `userID`=?";
-				
-				$stmt = getStatement($mysqli, $sql);
-				
-				if ($stmt) {
-					
-					$stmt->bind_param("i", $data['userID']);
-					
-					$results = fetchResults($stmt);
-					
-					if ($results) {
-						
-						$sql = "";
-						$action = "";
-						
-						if ($results[0]['numOfSkillsets'] == 0) {
-							$sql = "INSERT INTO `skills`(`userID`, `skill1`, `value1`, `skill2`, `value2`, `skill3`, `value3`, `skill4`, `value4`) VALUES(?,?,?,?,?,?,?,?,?)";
-							$action = "insert";
-						} elseif ($results[0]['numOfSkillsets'] == 1) {
-							$sql = "UPDATE `skills` SET skill1=?, value1=?, skill2=?, value2=?, skill3=?, value3=?, skill4=?, value4=? WHERE `userID`=?";
-							$action = "update";
-						} else {
-							echo "error";
-						}
-						
-						$stmt = getStatement($mysqli, $sql);
-						
-						if ($stmt) {
-							
-							if ($action == "insert") {
-								$stmt->bind_param("isisisisi", $data['udsrID'], $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4']);
-							} elseif ($action == "update") {
-								$stmt->bind_param("sisisisii", $data['skillName1'], $data['skill1'], $data['skillName2'], $data['skill2'], $data['skillName3'], $data['skill3'], $data['skillName4'], $data['skill4'], $data['userID']);
-							}
-							
-							if (executeUpdate($stmt)) {
-								disconnect($mysqli);
-								header("Location: pages-user-profile-view.php");
-								exit();
-							} else {
-								disconnect($mysqli);
-								header("Location: 500.php");
-								exit();
-							}
-							
-						} else {
-							disconnect($mysqli);
-							header("Location: 500.php");
-							exit();
-						}
-						
-					}
-					
-					
-				} else {
-					disconnect($mysqli);
-					header("Location: 500.php");
-					exit();
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-	function applyToListing($listingID, $applicantID)
-	{
-		
-		if (isset($listingID) && isset($applicantID)) {
-			
-			$mysqli = connect();
-			
-			if ($mysqli) {
-				
-				$sql = "SELECT `u`.`id` AS `posterID` FROM `users` AS `u`, `listings` AS `l`
-						WHERE `u`.`id`=`l`.`userID` AND `l`.`id`=?";
-				
-				$stmt = getStatement($mysqli, $sql);
-				
-				if ($stmt) {
-					
-					$stmt->bind_param("i", $listingID);
-					
-					$results = fetchResults($stmt);
-					
-					$posterID = $results[0]['posterID'];
-					
-					$sql = "INSERT INTO `applications`(`applicantID`, `posterID`, `listingID`) VALUES (?,?,?)";
-					
-					$stmt = getStatement($mysqli, $sql);
-					
-					if ($stmt) {
-						$stmt->bind_param("iii", $applicantID, $posterID, $listingID);
-						$mysqli->autocommit(false);
-						executeUpdate($stmt);
-						$mysqli->autocommit(true);
-					}
-					
-				}
-				
-				disconnect($mysqli);
-			}
-			
-		}
-		
-	}
-	
-	function insertPoll($data)
-	{
-		if ($con = connect()) {
-			$con->autocommit(false);
-			
-			$sql = "INSERT INTO polls (title) VALUES (?) ";
-			$stmt = getStatement($con, $sql);
-			$stmt->bind_param('s', $data);
-			
-			executeUpdate($stmt);
-			
-			$con->autocommit(true);
-			disconnect($con);
-		}
-		
-	}
-	
-	function insertPollChoices($dataTitle, $dataOptions)
-	{
-		if ($con = connect()) {
-			$con->autocommit(false);
-			// find id
-			$sql = "SELECT id FROM polls WHERE title= ?";
-			$stmt = getStatement($con, $sql);
-			$stmt->bind_param('s', $dataTitle);
-			$resultID = fetchResults($stmt);
-			
-			if (sizeof($resultID) == 1) {
-				for ($i = 0; $i < sizeof($dataOptions); $i++) {
-					$sql = "INSERT INTO poll_options (pollID, value) VALUES (?,?) ";
-					$stmt = getStatement($con, $sql);
-					$stmt->bind_param('is', $resultID[0]['id'], $dataOptions[$i]);
-					
-					executeUpdate($stmt);
-				}
-			}
-			$con->autocommit(true);
-			disconnect($con);
-			
-		}
-	}
-	
-	function updateSettings($data)
-	{
-		
-		if (isset($data)) {
-			
-			require_once "scripts.php";
-			
-			$mysqli = connect();
-			
-			if ($mysqli) {
-				
-				if (isset($data['username']) && isset($data['email']) && $data['username'] != "" && $data['email'] != "") {
-					
-					
-					$sql = "UPDATE `users` SET `username`=?, `email`=?, `last_update`=CURRENT_TIMESTAMP() WHERE `id`=?";
-					
-					$stmt = getStatement($mysqli, $sql);
-					
-					if ($stmt) {
-						
-						$stmt->bind_param("ssi", $data['username'], $data['email'], $data['userID']);
-						
-						$mysqli->autocommit(false);
-						if(!executeUpdate($stmt)){
-							echo "failed update";
-							return;
-						}
-						$mysqli->autocommit(true);
-						
-					}
-				}
-				
-				
-			}
-			
-		}
-		
-		if (isset($data['password']) && $data['password']!="") {
-			
-			if ($mysqli) {
-				
-				$sql = "UPDATE `users` SET `pass`=?, `last_update`=CURRENT_TIMESTAMP() WHERE `id`=?";
-				
-				$stmt = getStatement($mysqli, $sql);
-				
-				if ($stmt) {
-					
-					$stmt->bind_param("si", $data['password'], $data['userID']);
-					
-					$mysqli->autocommit(false);
-					executeUpdate($stmt);
-					$mysqli->autocommit(true);
-					
-				}
-				
-			}
-			
-		}
-		
-	}
-
 ?>

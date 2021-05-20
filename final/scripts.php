@@ -1,25 +1,28 @@
 <?php
 	
-	function connect(){
+	function connect()
+	{
 		
 		/* Attempt to connect to MySQL database */
-		$mysqli = new mysqli('localhost', 'root', '', 'bytes4hire');
+		$mysqli = new mysqli('localhost', 'root', '', 'icarus');
 		
 		// Check connection
-		if($mysqli === false){
+		if ($mysqli === false) {
 			die("ERROR: Could not connect. " . $mysqli->connect_error);
 		}
 		
 		return $mysqli;
 	}
 	
-	function disconnect($mysqli){
+	function disconnect($mysqli)
+	{
 		$mysqli->close();
 	}
 	
-	function getStatement($mysqli, $sql){
+	function getStatement($mysqli, $sql)
+	{
 		
-		if($mysqli) {
+		if ($mysqli) {
 			if ($stmt = $mysqli->prepare($sql)) {
 				return $stmt;
 			}
@@ -28,14 +31,15 @@
 		return null;
 	}
 	
-	function executeUpdate($stmt){
+	function executeUpdate($stmt)
+	{
 		
-		$executed=false;
+		$executed = false;
 		
-		if($stmt){
+		if ($stmt) {
 			
-			if($stmt->execute()){
-				$executed=true;
+			if ($stmt->execute()) {
+				$executed = true;
 			}
 			
 			$stmt->close();
@@ -46,13 +50,14 @@
 		
 	}
 	
-	function fetchResults($stmt){
+	function fetchResults($stmt)
+	{
 		
-		$data=array();
+		$data = array();
 		
-		if($stmt){
+		if ($stmt) {
 			
-			if($stmt->execute()){
+			if ($stmt->execute()) {
 				
 				$results = $stmt->get_result();
 				
@@ -69,7 +74,8 @@
 		
 	}
 	
-	function sessionCheck(){
+	function sessionCheck()
+	{
 		
 		if (session_status() != PHP_SESSION_ACTIVE) {
 			session_start();
@@ -77,50 +83,113 @@
 		
 		if (!isset($_SESSION)) {
 			$_SESSION['loggedin'] = false;
-			$_SESSION['role'] = 'Guest';
-			header("Location: index-guest.php");
-			exit();
+			$_SESSION['role'] = 0;
 		} else {
 			
 			if (!isset($_SESSION['loggedin'])) {
 				$_SESSION['loggedin'] = false;
-				$_SESSION['role'] = 'Guest';
+				$_SESSION['role'] = 0;
 			}
 			
-			if($_SESSION['role']=='Guest'){
+			if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == false) {
 				header("Location: index-guest.php");
 				exit();
 			}
 			
 			if (!isset($_SESSION['username'])) {
-				header("Location: authentication-login.php");
+				header("Location: login.php");
 				exit();
 			}
 			
 			if (!isset($_SESSION['status'])) {
-				header("Location: authentication-login.php");
-				exit();
-			}
-			
-			if ($_SESSION['status']!='Active') {
-				header("Location: index-inactive.php");
+				header("Location: login.php");
 				exit();
 			}
 			
 			if (!isset($_SESSION['role'])) {
-				header("Location: authentication-login.php");
+				header("Location: login.php");
 				exit();
 			}
 			
 			if (!isset($_SESSION['id'])) {
-				header("Location: authentication-login.php");
+				header("Location: login.php");
 				exit();
 			}
 			
 		}
 	}
 	
-	function sessionClose(){
+	function iHaveLogged()
+	{
+		
+		if (session_status() != PHP_SESSION_ACTIVE) {
+			session_start();
+		}
+		
+		if (!isset($_SESSION)) {
+			return false;
+		}
+		
+		if (!isset($_SESSION['username'])) {
+			return false;
+		}
+		
+		if (!isset($_SESSION['role'])) {
+			return false;
+		}
+		
+		if (!isset($_SESSION['id'])) {
+			return false;
+		}
+		
+		if (!isset($_SESSION['status'])) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	function iAmProfessor()
+	{
+		
+		if (iHaveLogged()) {
+			if ($_SESSION['role'] != 2) {
+				return -1;
+			}
+			
+			if ($_SESSION['status'] != 'Active') {
+				return 0;
+			}
+			
+			return 1;
+		}
+		
+		return -1;
+		
+	}
+	
+	function iAmStudent()
+	{
+		
+		if (iHaveLogged()) {
+			if ($_SESSION['role'] != 3) {
+				return -1;
+			}
+			
+			if ($_SESSION['status'] != 'Active') {
+				return 0;
+			}
+			
+			return 1;
+			
+		}
+		
+		return -1;
+	}
+	
+	function sessionClose()
+	{
 		session_start();
 		
 		// remove all session variables
@@ -131,11 +200,12 @@
 		
 		// destroy the session
 		session_destroy();
-		header("Location: authentication-login.php");
+		header("Location: login.php");
 		exit();
 	}
 	
-	function debugTable($table){
+	function debugTable($table)
+	{
 		
 		echo "<br>";
 		echo "<pre>";
@@ -145,6 +215,19 @@
 		
 	}
 	
+	function displayError($errorMsg)
+	{
+		if ($errorMsg != "") {
+			echo $errorMsg; ?>
+            <div class="container-login100-form-btn">
+                <div class="wrap-login100-form-btn">
+                    <div class="login100-form-bgbtn"></div>
+                    <button type="button" onclick="window.history.back();" class="login100-form-btn">Back</button>
+                </div>
+            </div>
+		<?php }
+	}
+
 ?>
 
 

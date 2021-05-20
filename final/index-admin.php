@@ -15,7 +15,7 @@
     <div class="main_container">
 		
 		<?php require_once "navigation-sidebar.php"; ?>
-		<?php require_once "navigation-top-admin.php"; ?>
+		<?php require_once "navigation-top-user.php"; ?>
 
         <!-- page content -->
         <div class="right_col" role="main">

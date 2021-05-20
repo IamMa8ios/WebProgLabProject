@@ -3,9 +3,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="Images/icon.ico" type="image/ico"/>
+<link rel="icon" href="Images/logo.ico" type="image/ico"/>
 
-<title>Bytes 4 Hire</title>
+<title>Icarus ICSD</title>
 
 <!-- Bootstrap -->
 <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,5 +14,5 @@
 <!-- Custom Theme Style -->
 <link href="../build/css/custom.min.css" rel="stylesheet">
 
-<!-- Our Own style -->
+<!-- Our own CSS -->
 <link href="myStyles.css" rel="stylesheet">

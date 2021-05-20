@@ -2,7 +2,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="index.php" class="site_title"><img src="Images/logo.png" style="width: 90%; height: 80%;"></a>
+            <a href="index.php" class="site_title"><img src="Images/logo.png" style="height: 50px; width: 50px;"></img> <span>Icarus ICSD</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -43,9 +43,9 @@
                                     <li><a><i class='fa fa-bar-chart-o'></i> Polling <span
                                                     class='fa fa-chevron-down'></span></a>
                                         <ul class='nav child_menu'>
-                                            <li><a href='pages-admin-polls.php'>Create New</a></li>
-                                            <li><a href='pages-admin-polls-ongoing.php'>Ongoing</a></li>
-                                            <li><a href='pages-admin-polls-history.php'>History</a></li>
+                                            <li><a href='chartjs.html'>Create New</a></li>
+                                            <li><a href='chartjs2.html'>Ongoing</a></li>
+                                            <li><a href='morisjs.html'>History</a></li>
                                         </ul>
                                     </li>
 									<?php

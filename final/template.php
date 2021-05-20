@@ -15,8 +15,8 @@
     <div class="main_container">
 		
 		
-		<?php require_once "navigation-sidebar.php"; ?>
-		<?php require_once "navigation-top-user.php"; ?>
+		<?php include("navigation-sidebar.php"); ?>
+		<?php include("navigation-top-user.php"); ?>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -25,7 +25,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
-		<?php require_once "navigation-footer.php"; ?>
+		<?php include_once "navigation-footer.php"; ?>
         <!-- /footer content -->
     </div>
 </div>

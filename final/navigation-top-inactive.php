@@ -13,8 +13,8 @@
                         <img src="Images/user.png" alt=""><?php echo $_SESSION['username']; ?>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="pages-user-profile-view.php"> Profile</a>
-                        <a class="dropdown-item" href="settings.php">
+                        <a class="dropdown-item" href="pages-profile-inactive.php"> Profile</a>
+                        <a class="dropdown-item" href="javascript:;">
                             <span>Settings</span>
                         </a>
                         <a class="dropdown-item" href="javascript:;">Help</a>

@@ -4,7 +4,7 @@
 	
 	// Check if the user is logged in, otherwise redirect to login page
 	if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-		header("location: authentication-login.php");
+		header("location: login.php");
 		exit();
 	}
 	
@@ -21,8 +21,8 @@
 		// Validate new password
 		if(empty(trim($_POST["new_password"]))){
 			$new_password_err = "Please enter the new password.";
-		} elseif(strlen(trim($_POST["new_password"])) < 8){
-			$new_password_err = "Password must have at least 8 characters.";
+		} elseif(strlen(trim($_POST["new_password"])) < 6){
+			$new_password_err = "Password must have atleast 6 characters.";
 		} else{
 			$new_password = trim($_POST["new_password"]);
 		}
@@ -54,7 +54,7 @@
 				if($stmt->execute()){
 					// Password updated successfully. Destroy the session, and redirect to login page
 					session_destroy();
-					header("location: authentication-login.php");
+					header("location: login.php");
 					exit();
 				} else{
 					echo "Oops! Something went wrong. Please try again later.";
